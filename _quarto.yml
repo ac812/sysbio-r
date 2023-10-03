@@ -14,10 +14,12 @@ book:
       chapters: 
         - getting-started.qmd
         - intro-r-programming.qmd
+        - starting-with-data.qmd
 
     - references.qmd
 
 bibliography: references.bib
+csl: nature.csl
 
 format:
   html:

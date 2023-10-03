@@ -52,6 +52,9 @@ This practical is composed of the following exercises:
 | [Exercise 1](intro-r-programming.qmd#exercise-1) | **Variables**: In this exercise we assign different values to variables | ![](images/stars-level-1.png) |
 | [Exercise 2](intro-r-programming.qmd#exercise-2) | **Vectors**: This exercise introduces vector operations. | ![](images/stars-level-1.png) |
 | [Exercise 3](intro-r-programming.qmd#exercise-3) | **Missing data**:  In this exercise we will look on how to tackle missing data. | ![](images/stars-level-1.png)
+| [Exercise 4](starting-with-data.qmd#exercise-4) | **Data frame**: In this exercise we explore the different attributes of a data frame. | ![](images/stars-level-1.png) |
+| [Exercise 5](starting-with-data.qmd#exercise-5) | **Data frame indexing**: In this exercise we will index dataframe in different ways. | ![](images/stars-level-2.png) | 
+| [Exercise 6](starting-with-data.qmd#exercise-6) | **Factors**: This exercise we will look at categorical data. | ![](images/stars-level-1.png) | 
 
 :::{.callout-note icon=false appearance="minimal"}
 ## Managed to solve all the exercises?  First badge earned!
