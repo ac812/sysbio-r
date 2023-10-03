@@ -1,0 +1,43 @@
+---
+author: Alexia Cardona
+---
+
+# Practicals {.unnumbered}
+
+
+
+As part of the NST Part III Systems Biology subject we will be learning R programming and foundation data visualisation and manipulation techniques that are useful not just for this course but also beyond. These core concepts are used and applied throughout the Systems Biology course.  Understanding these are key to be able to follow the rest of the course.
+
+### Earn your badge each week
+In the programming world, many organisations award badges to learners on the acquisition of a new skill or completion of 
+a milestone. If you attempted and solved all the exercises of each practical, you will earn a badge. By the end of week 
+four you will have earned the 4-star badge ![](images/stars-4-18px.png) that marks the end of the Systems Biology R practicals.   
+Below are the links of each practical sheet that we will be working on each week. 
+
+
+```{=html}
+<table style="border: 1px solid black;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid black; text-align:center;">Practical 1</th>
+      <th style="border: 1px solid black; text-align:center;">Practical 2</th>
+      <th style="border: 1px solid black; text-align:center;">Practical 3</th>
+      <th style="border: 1px solid black; text-align:center;">Practical 4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid black;"><a href="https://www.bbc.co.uk/news"><img src="images/level-1-badge.png" alt="Badge 1" /></a></td>
+      <td style="border: 1px solid black;"><img src="images/level-2-badge-gray.png" alt="Badge 2" /></td>
+      <td style="border: 1px solid black;"><img src="images/level-3-badge-gray.png" alt="Badge 3" /></td>
+      <td style="border: 1px solid black;"><img src="images/level-4-badge-gray.png" alt="Badge 4" /></td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid black;"><a href="https://www.bbc.co.uk/news">Go to Practical 1 &#8594;</a></td>
+      <td style="border: 1px solid black;">Activated after Practical 1</td>
+      <td style="border: 1px solid black;">Activated after Practical 2</td>
+      <td style="border: 1px solid black;">Activated after Practical 3</td>
+    </tr>
+  </tbody>
+</table>
+```

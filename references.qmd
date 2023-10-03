@@ -1,0 +1,7 @@
+# References {.unnumbered}
+
+
+Practical 1 was adapted from The Data Carpentry R Ecology Lesson @Michonneau2019.
+
+::: {#refs}
+:::
