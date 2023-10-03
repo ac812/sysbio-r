@@ -1,5 +1,8 @@
 ---
-author: Alexia Cardona
+author:
+  - name: Alexia Cardona
+    affiliations:
+      - Department of Genetics, University of Cambridge
 ---
 
 # Practical 1 {.unnumbered}

@@ -1,5 +1,8 @@
 ---
-author: Alexia Cardona
+author:
+  - name: Alexia Cardona
+    affiliations:
+      - Department of Genetics, University of Cambridge
 ---
 
 # Practicals {.unnumbered}
@@ -27,13 +30,13 @@ Below are the links of each practical sheet that we will be working on each week
   </thead>
   <tbody>
     <tr>
-      <td style="border: 1px solid black;"><a href="https://www.bbc.co.uk/news"><img src="images/level-1-badge.png" alt="Badge 1" /></a></td>
+      <td style="border: 1px solid black;"><a href="https://ac812.github.io/sysbio-r/practical1.html"><img src="images/level-1-badge.png" alt="Badge 1" /></a></td>
       <td style="border: 1px solid black;"><img src="images/level-2-badge-gray.png" alt="Badge 2" /></td>
       <td style="border: 1px solid black;"><img src="images/level-3-badge-gray.png" alt="Badge 3" /></td>
       <td style="border: 1px solid black;"><img src="images/level-4-badge-gray.png" alt="Badge 4" /></td>
     </tr>
     <tr>
-      <td style="border: 1px solid black;"><a href="https://www.bbc.co.uk/news">Go to Practical 1 &#8594;</a></td>
+      <td style="border: 1px solid black;"><a href="https://ac812.github.io/sysbio-r/practical1.html">Go to Practical 1 &#8594;</a></td>
       <td style="border: 1px solid black;">Activated after Practical 1</td>
       <td style="border: 1px solid black;">Activated after Practical 2</td>
       <td style="border: 1px solid black;">Activated after Practical 3</td>
