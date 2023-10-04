@@ -9,12 +9,17 @@ book:
   chapters:
     - index.qmd
     - practical1.qmd
+    - practical2.qmd
     
     - part: "Practical 1 Notes"
       chapters: 
         - getting-started.qmd
         - intro-r-programming.qmd
         - starting-with-data.qmd
+        
+    - part: "Practical 2 Notes"
+      chapters: 
+        - tidyverse1.qmd
 
     - references.qmd
 

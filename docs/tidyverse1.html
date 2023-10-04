@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Alexia Cardona">
+
+<title>R Practicals for NST Part III Systems Biology - 4&nbsp; Data manipulation and visualisation with tidyverse</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./starting-with-data.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tidyverse1.html">Practical 2 Notes</a></li><li class="breadcrumb-item"><a href="./tidyverse1.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data manipulation and visualisation with tidyverse</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R Practicals for NST Part III Systems Biology</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practicals</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./practical1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 1</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./practical2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 2</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Practical 1 Notes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./getting-started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started in R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-r-programming.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./starting-with-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Starting with data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Practical 2 Notes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tidyverse1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data manipulation and visualisation with tidyverse</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#data-exploration-workflow" id="toc-data-exploration-workflow" class="nav-link active" data-scroll-target="#data-exploration-workflow"><span class="header-section-number">4.1</span> Data exploration workflow</a></li>
+  <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages"><span class="header-section-number">4.2</span> Packages</a>
+  <ul class="collapse">
+  <li><a href="#tidyverse" id="toc-tidyverse" class="nav-link" data-scroll-target="#tidyverse"><span class="header-section-number">4.2.1</span> Tidyverse</a></li>
+  <li><a href="#installing-and-loading-packages" id="toc-installing-and-loading-packages" class="nav-link" data-scroll-target="#installing-and-loading-packages"><span class="header-section-number">4.2.2</span> Installing and loading packages</a></li>
+  </ul></li>
+  <li><a href="#importingreading-data-from-files" id="toc-importingreading-data-from-files" class="nav-link" data-scroll-target="#importingreading-data-from-files"><span class="header-section-number">4.3</span> Importing/Reading data from files</a></li>
+  <li><a href="#tibble" id="toc-tibble" class="nav-link" data-scroll-target="#tibble"><span class="header-section-number">4.4</span> Tibble</a></li>
+  <li><a href="#visualising-data-in-r" id="toc-visualising-data-in-r" class="nav-link" data-scroll-target="#visualising-data-in-r"><span class="header-section-number">4.5</span> Visualising data in R</a>
+  <ul class="collapse">
+  <li><a href="#adding-layers" id="toc-adding-layers" class="nav-link" data-scroll-target="#adding-layers"><span class="header-section-number">4.5.1</span> Adding layers</a></li>
+  <li><a href="#saveplot" id="toc-saveplot" class="nav-link" data-scroll-target="#saveplot"><span class="header-section-number">4.5.2</span> Saving a plot to a file</a></li>
+  </ul></li>
+  <li><a href="#transforming-data---dplyr" id="toc-transforming-data---dplyr" class="nav-link" data-scroll-target="#transforming-data---dplyr"><span class="header-section-number">4.6</span> Transforming data - dplyr</a>
+  <ul class="collapse">
+  <li><a href="#selecting-columns" id="toc-selecting-columns" class="nav-link" data-scroll-target="#selecting-columns"><span class="header-section-number">4.6.1</span> Selecting columns</a></li>
+  <li><a href="#filtering-rows" id="toc-filtering-rows" class="nav-link" data-scroll-target="#filtering-rows"><span class="header-section-number">4.6.2</span> Filtering rows</a></li>
+  <li><a href="#pipes" id="toc-pipes" class="nav-link" data-scroll-target="#pipes"><span class="header-section-number">4.6.3</span> Pipes</a></li>
+  <li><a href="#creating-new-columns" id="toc-creating-new-columns" class="nav-link" data-scroll-target="#creating-new-columns"><span class="header-section-number">4.6.4</span> Creating new columns</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data manipulation and visualisation with tidyverse</span></h1>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Alexia Cardona </p>
+  </div>
+    <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Department of Genetics, University of Cambridge
+          </p>
+      </div>
+    </div>
+
+<div class="quarto-title-meta">
+
+      
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="data-exploration-workflow" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="data-exploration-workflow"><span class="header-section-number">4.1</span> Data exploration workflow</h2>
+<p>When you are working on a project that requires data analysis, you will normally need to perform the following steps:</p>
+<div id="fig-ds-workflow" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/data-science-explore.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;4.1: A data science workflow<span class="citation" data-cites="Wickham2023"><sup><a href="references.html#ref-Wickham2023" role="doc-biblioref">1</a></sup></span></figcaption>
+</figure>
+</div>
+<p>To understand better the workflow<span class="citation" data-cites="Wickham2023"><sup><a href="references.html#ref-Wickham2023" role="doc-biblioref">1</a></sup></span> in the illustration above, let us go over each stage to see what each step entails:</p>
+<ol type="1">
+<li>The first step in working with data is to first <strong>import</strong> your data into R. This connects the external file/database to your project in R.</li>
+<li><strong>Cleaning</strong> or <strong>tidying</strong> the data will follow, which involves making sure that the data is consistent and that each row in the dataset is an observation and each column is a variable.<br>
+<em>e.g.</em> In the <em>surveys</em> data frame the <em>month</em> column specifies months as an integer from 1 to 12. The dataset would have inconsistent data if there was a record in the dataset that had a month specified by name, <em>e.g.</em> September rather than 9. A month of 0 or any other number that is not in the range 1 to 12 would have also made the dataset inconsistent. Another common problem is capitalisation; the same word in the same column can be written with capitals or without; <em>e.g.</em> <em>Bird</em> or <em>bird</em> in the same <em>taxa</em> column is inconsistent data. During the <em>tidying</em> stage it is important to make the dataset consistent as much as possible so that you can focus on the questions you are trying to solve in your analysis.<br>
+<!--image showing that each row is an observation and that column is a variable--></li>
+<li>Once the dataset is tidy, we move to the transformation stage. To be able to <strong>transform</strong> your data you need to plan in advance what analyses you would like to perform on the dataset and what plots you would like to create. In this way, you are able to plan ahead what variables/columns you will be using from the dataset, what additional variables you will need to create and what variables you will not be using so that you can keep only the columns in the dataset that are relevant for your analyses. By the end of the transformation process you will have a dataset that is focused for your analyses and you can move on to the main exploratory mechanisms of this workflow which are visualisation and modelling. These two stages complement each other and when exploring your data you normally repeat these two stages several times.<br>
+</li>
+<li><strong>Visualising</strong> data is a powerful way to explore your data. Furthermore it helps you understand if there is any pattern in the data.<br>
+</li>
+<li><strong>Modelling</strong> the data involves applying statistics or other mathematical or computational models on your data to explore if there are correlations or patterns in the dataset to help you answer the scientific question you are trying to solve.<br>
+</li>
+<li>The last step in the data exploration workflow is to <strong>communicate</strong> your results. This is very important as you will need to be able to communicate your results to others to have a successful project.</li>
+</ol>
+<p>All these stages in the data exploration workflow can be achieved by programming in R. In these R practicals we will not look into the <em>Model</em> and <em>Communicate</em> stages of the workflow in this course.</p>
+<p>In the next sections we will be looking at the <em>import</em>, <em>tidy</em>, <em>transform</em> and <em>visualise</em> stages of the data exploration workflow by using one of the most popular packages in data science in R; <strong>Tidyverse</strong>.</p>
+</section>
+<section id="packages" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="packages"><span class="header-section-number">4.2</span> Packages</h2>
+<p>So far we have learnt how to use R with R’s in-built functionality that we will refer to as <strong>R base</strong>. There is a way, however, to extend this functionality by using external functions through <strong>packages</strong>. Packages in R are basically sets of additional functions that let you do more stuff. The functions we’ve been using so far, like <code>str()</code> or <code>head()</code>, come built into R; packages give you access to more of them.</p>
+<!--image of a package with functions in it-->
+<section id="tidyverse" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="tidyverse"><span class="header-section-number">4.2.1</span> Tidyverse</h3>
+<p>The package that we will be using in this course is called tidyverse. It is an “umbrella-package” that contains several packages useful for data manipulation and visualisation which work well together such as <strong><code>readr</code></strong>, <strong><code>tidyr</code></strong>, <strong><code>dplyr</code></strong>, <strong><code>ggplot2</code></strong>, <strong><code>tibble</code></strong>, etc…</p>
+<!--image of tidyverse-->
+<p>Tidyverse is a recent package (launched in 2016) when compared to <em>R base</em> (stable version in 2000), thus you will still come across R resources that do not use <em>tidyverse</em>. However, since its’ release, <em>tidyverse</em> has been increasing in popularity throughout the R programming community and it is now very popular in Data Science as it was designed with the aim to help Data Scientists perform their tasks more efficiently.</p>
+<p>Some of the main advantages of <em>tidyverse</em> over <em>R base</em> are:</p>
+<ol type="1">
+<li><strong>Easier to read </strong>
+<p>
+Bracket subsetting is handy, but it can be cumbersome and difficult to read, especially for complicated operations.
+</p>
+<!--https://www.onthelambda.com/2014/02/10/how-dplyr-replaced-my-most-common-r-idioms/-->
+<em>e.g.</em> Get only the rows that have species as albigula surveyed in the year 1977.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R Base</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>surveys[surveys<span class="sc">$</span>species<span class="sc">==</span><span class="st">"albigula"</span> <span class="sc">&amp;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        surveys<span class="sc">$</span>year<span class="sc">==</span><span class="dv">1977</span>, ]</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># tidyverse</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(surveys, species<span class="sc">==</span><span class="st">"albigula"</span> <span class="sc">&amp;</span> year<span class="sc">==</span><span class="dv">1977</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li><strong>Faster</strong>
+<p>
+Using tidyverse is up to 10x faster<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> when compared to the corresponding base R base functions.
+</p></li>
+<li><strong>Strings are not converted to <code>factor</code></strong>
+<p>
+We have seen in our previous lesson that when building or importing a data frame, the columns that contain characters (<em>i.e.</em>, text) are coerced (=converted) into the <code>factor</code> data type. We had to set <strong><code>stringsAsFactors</code></strong> to <strong><code>FALSE</code></strong> to avoid this hidden argument to convert our data type. With tidyverse, this does not happen.</p></li>
+</ol>
+</section>
+<section id="installing-and-loading-packages" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="installing-and-loading-packages"><span class="header-section-number">4.2.2</span> Installing and loading packages</h3>
+<p>Before using a package for the first time you will need to install it on your machine, and then you should import it in every subsequent R session when you need it. To install a package in R on your machine you need to use the <code>install.packages</code> function. To install the <code>tidyverse</code> package type the following straight into the console:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install the tidyverse package</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>It is better to install packages straight from the console then from your script as there’s no need to re-install packages every time you run the script.</p>
+<p>Then, to load the package type:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## load the tidyverse package</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="importingreading-data-from-files" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="importingreading-data-from-files"><span class="header-section-number">4.3</span> Importing/Reading data from files</h2>
+<p>After loading the <code>tidyverse</code> package in R we are now able to use its’ functions. We will start working through the data exploration workflow by first importing data into R. To import the data into R as before, we will now use the <code>read_csv</code> function, from the tidyverse package <strong><code>readr</code></strong>, instead of using <code>read.csv</code> from <code>R base</code>. The <code>readr</code> package contains functions to read tabular data into R. Let us read in the same file we used before using <code>tidyverse</code> this time:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>surveys <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/portal_data_joined.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+</section>
+<section id="tibble" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="tibble"><span class="header-section-number">4.4</span> Tibble</h2>
+<p>After importing data into R we need to check if the data has been loaded into R correctly.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## display the first 6 rows of the dataset</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(surveys)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 13
+  record_id month   day  year plot_id speci…¹ sex   hindf…² weight genus species
+      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  
+1         1     7    16  1977       2 NL      M          32     NA Neot… albigu…
+2        72     8    19  1977       2 NL      M          31     NA Neot… albigu…
+3       224     9    13  1977       2 NL      &lt;NA&gt;       NA     NA Neot… albigu…
+4       266    10    16  1977       2 NL      &lt;NA&gt;       NA     NA Neot… albigu…
+5       349    11    12  1977       2 NL      &lt;NA&gt;       NA     NA Neot… albigu…
+6       363    11    12  1977       2 NL      &lt;NA&gt;       NA     NA Neot… albigu…
+# … with 2 more variables: taxa &lt;chr&gt;, plot_type &lt;chr&gt;, and abbreviated
+#   variable names ¹​species_id, ²​hindfoot_length</code></pre>
+</div>
+</div>
+<p>Notice that the first line of the output shows the data structure used to store the data imported into: <strong><code>tibble</code></strong>. <code>tibble</code> is the main data structure used in <code>tidyverse</code>. You can look at <code>tibble</code> as the <code>data.frame</code> version of <code>tidyverse</code>. The first immediate difference from a <code>data.frame</code> is that a <code>tibble</code> displays the data type of each column under its name and it only prints as many columns as fit on one screen. Furthermore as mentioned before, the columns of class <code>character</code> are never converted into <code>factor</code>. Another difference is that printing a <code>tibble</code> will not print the whole dataset, but just the first 10 rows and only the columns that fit the screen (same as <code>head</code> but with 10 rows instead of 6). If you would like to print more than the first 10 rows use the <code>print</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#print the first 15 rows</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(surveys, <span class="at">n=</span><span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 34,786 × 13
+   record…¹ month   day  year plot_id speci…² sex   hindf…³ weight genus species
+      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  
+ 1        1     7    16  1977       2 NL      M          32     NA Neot… albigu…
+ 2       72     8    19  1977       2 NL      M          31     NA Neot… albigu…
+ 3      224     9    13  1977       2 NL      &lt;NA&gt;       NA     NA Neot… albigu…
+ 4      266    10    16  1977       2 NL      &lt;NA&gt;       NA     NA Neot… albigu…
+ 5      349    11    12  1977       2 NL      &lt;NA&gt;       NA     NA Neot… albigu…
+ 6      363    11    12  1977       2 NL      &lt;NA&gt;       NA     NA Neot… albigu…
+ 7      435    12    10  1977       2 NL      &lt;NA&gt;       NA     NA Neot… albigu…
+ 8      506     1     8  1978       2 NL      &lt;NA&gt;       NA     NA Neot… albigu…
+ 9      588     2    18  1978       2 NL      M          NA    218 Neot… albigu…
+10      661     3    11  1978       2 NL      &lt;NA&gt;       NA     NA Neot… albigu…
+11      748     4     8  1978       2 NL      &lt;NA&gt;       NA     NA Neot… albigu…
+12      845     5     6  1978       2 NL      M          32    204 Neot… albigu…
+13      990     6     9  1978       2 NL      M          NA    200 Neot… albigu…
+14     1164     8     5  1978       2 NL      M          34    199 Neot… albigu…
+15     1261     9     4  1978       2 NL      M          32    197 Neot… albigu…
+# … with 34,771 more rows, 2 more variables: taxa &lt;chr&gt;, plot_type &lt;chr&gt;, and
+#   abbreviated variable names ¹​record_id, ²​species_id, ³​hindfoot_length</code></pre>
+</div>
+</div>
+<p>Since printing <code>tibble</code> already gives you information about the data structure, the data types of each column and the size of the dataset, the <code>str</code> function is not as much useful as it was when using <code>data.frame</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## inspect the data</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(surveys)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [34,786 × 13] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ record_id      : num [1:34786] 1 72 224 266 349 363 435 506 588 661 ...
+ $ month          : num [1:34786] 7 8 9 10 11 11 12 1 2 3 ...
+ $ day            : num [1:34786] 16 19 13 16 12 12 10 8 18 11 ...
+ $ year           : num [1:34786] 1977 1977 1977 1977 1977 ...
+ $ plot_id        : num [1:34786] 2 2 2 2 2 2 2 2 2 2 ...
+ $ species_id     : chr [1:34786] "NL" "NL" "NL" "NL" ...
+ $ sex            : chr [1:34786] "M" "M" NA NA ...
+ $ hindfoot_length: num [1:34786] 32 31 NA NA NA NA NA NA NA NA ...
+ $ weight         : num [1:34786] NA NA NA NA NA NA NA NA 218 NA ...
+ $ genus          : chr [1:34786] "Neotoma" "Neotoma" "Neotoma" "Neotoma" ...
+ $ species        : chr [1:34786] "albigula" "albigula" "albigula" "albigula" ...
+ $ taxa           : chr [1:34786] "Rodent" "Rodent" "Rodent" "Rodent" ...
+ $ plot_type      : chr [1:34786] "Control" "Control" "Control" "Control" ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   record_id = col_double(),
+  ..   month = col_double(),
+  ..   day = col_double(),
+  ..   year = col_double(),
+  ..   plot_id = col_double(),
+  ..   species_id = col_character(),
+  ..   sex = col_character(),
+  ..   hindfoot_length = col_double(),
+  ..   weight = col_double(),
+  ..   genus = col_character(),
+  ..   species = col_character(),
+  ..   taxa = col_character(),
+  ..   plot_type = col_character()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
+</div>
+</div>
+<p>Notice that rather than specifying <code>tibble</code> as the data structure of surveys, the first line of <code>str</code>’s output now specifies <code>‘spec_tbl_df’, ‘tbl_df’, ‘tbl’ and 'data.frame'</code> which can be a bit confusing. These are the classes <code>tibble</code> inherits from which in simple terms means that <code>tibble</code> is a <code>data.frame</code> with a few modifications. Therefore, most of the functions that were used with <code>data.frame</code> can also be used with <code>tibble</code>.</p>
+</section>
+<section id="visualising-data-in-r" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="visualising-data-in-r"><span class="header-section-number">4.5</span> Visualising data in R</h2>
+<p>After inspecting the <code>surveys</code> dataset in R, the data looks tidy and we are happy with its format, so let us start understanding better our data by visualising it. <strong><code>ggplot2</code></strong> is the visualisation package in <code>tidyverse</code> and we will be using this to create some plots. <code>ggplot2</code> is a very popular package used for plotting mainly due to its simple way to create plots from tabular data.</p>
+<p>To create a plot, we will use the following basic template.</p>
+<pre><code>ggplot(data = &lt;DATA&gt;, mapping = aes(&lt;MAPPINGS&gt;)) +  &lt;GEOM_FUNCTION&gt;()</code></pre>
+<p>As you can see there are 3 main elements that you need to create a plot:</p>
+<p>The <code>ggplot</code> function takes 2 arguments:</p>
+<ul>
+<li><strong>data</strong>: This is the data frame to attach to the plot. The data frame must contain the variables to plot as columns and the rows must contain the observations that you need to plot.</li>
+<li><strong>mapping</strong>: Aesthetic mappings describe how variables in the data are mapped to visual properties of the plot.</li>
+</ul>
+<p>Using the <code>ggplot</code> function on its own will not plot anything. We need to add a <strong>geom_function</strong> as a layer. Layers are added to plots by using <code>+</code>. They are added on top of the other previous layers that might be present.</p>
+<ul>
+<li><strong>geom_function</strong>: This specifies the type of plot would you like to plot. The greatest advantage of this is that you can easily change the plot type by just changing the geom_function and keeping everything else the same. You can see a whole list of plots that you can plot <a href="https://ggplot2.tidyverse.org/reference/index.html#section-layer-geoms">here</a>.</li>
+</ul>
+<p>Let us practice this on our <code>surveys</code> dataset. We would like to create a scatter plot with <code>weight</code> on the x-axis, <code>hindfoot_length</code> on the y-axis</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> surveys, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> hindfoot_length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidyverse1_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="adding-layers" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="adding-layers"><span class="header-section-number">4.5.1</span> Adding layers</h3>
+<p>As you can see if you just specify the <code>ggplot</code> function with the data and aesthetic mappings, it will just create an empty plot. Let us now add the geom_function for the scatter plot (<code>geom_point</code>) as a layer to the plot: <a name="firstplot"></a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> surveys, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> hindfoot_length)) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidyverse1_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>You can customise some of the visualisations of the plot to extract more information from it. For instance, we can add transparency (<code>alpha</code>) to avoid overplotting:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> surveys, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> hindfoot_length)) <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidyverse1_files/figure-html/adding-transparency-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>You can find a list of aesthetics for each type of plot in the <a href="https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf">ggplot2 cheat sheet</a>.</p>
+<p>We can also add colors for all the points:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> surveys, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> hindfoot_length)) <span class="sc">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">color =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidyverse1_files/figure-html/adding-colors-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>If we would like to try other type of plots on the data, the best thing is to save the ggplot into a variable as below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign plot to a variable</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>surveys_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> surveys, </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> hindfoot_length))</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw a scatter plot</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>surveys_plot <span class="sc">+</span> </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now draw a <code>geom_smooth</code> plot. This plot is good when you need to see if there is any pattern between the two variables being plotted that you would not normally see in a scatter plot due to overplotting.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>surveys_plot <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidyverse1_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Rather than seeing each plot separately, sometimes plotting multiple plots on top of each other is a better way. You can add multiple plots as layers on top of each other as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>surveys_plot <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidyverse1_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Anything you put in the <code>ggplot()</code> function can be seen by any geom layers that you add (<em>i.e.,</em> these are universal plot settings).</li>
+<li>You can also specify mappings for a given geom independently of the mappings defined globally in the <code>ggplot()</code> function.</li>
+<li>The <code>+</code> sign used to add new layers must be placed at the end of the line containing the <em>previous</em> layer. If, instead, the <code>+</code> sign is added at the beginning of the line containing the new layer, &gt;<strong><code>ggplot2</code></strong> will not add the new layer and will return an error message.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is the correct syntax for adding layers</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>surveys_plot <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This will not add the new layer and will return an error message</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>surveys_plot </span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<div id="exercise-7" class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Level: <img src="images/stars-level-2.png" class="img-fluid"></p>
+<p>Scatter plots can be useful exploratory tools for small datasets. For data sets with large numbers of observations, such as the <code>surveys</code> data set, overplotting of points can be a limitation of scatter plots. We have already seen how we can visualise data better when we have overplotting with the <code>geom_smooth</code> plot. Another way for handling overplotting is to display the density of the data through contours. As this challenge’s task create a script called <code>plot_density2d.R</code> which loads the file data/portal_data_joined.csv into the variable <code>surveys</code>. It then uses this dataset to plot the <code>weight</code> on the x-axis and <code>hindfoot_length</code> on the y-axis in a <code>geom_density2d</code> plot.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution for Exercise 7
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#load the surveys data</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>surveys <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/portal_data_joined.csv"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">#attach data and map x and y axes</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>surveys_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> surveys, </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> hindfoot_length))</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co">#draw geom_density2d</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>surveys_plot <span class="sc">+</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density2d</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="saveplot" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="saveplot"><span class="header-section-number">4.5.2</span> Saving a plot to a file</h3>
+<p>To save a plot to file use the <code>ggsave</code> function. If you look at the <a href="https://ggplot2.tidyverse.org/reference/ggsave.html">documentation of ggsave</a> you can see the different arguments the ggsave function takes. Let us save the plot present in the surveys_plot variable into a file called <code>plot_weight_hindfoot_density2d.png</code> into a folder in this project called <code>img_output</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#save plot that you would like to save into a variable</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>out_plot <span class="ot">&lt;-</span> surveys_plot <span class="sc">+</span> <span class="fu">geom_density2d</span>()</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#save plot to file</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename=</span><span class="st">"img_output/plot_weight_hindfoot_density2d.png"</span>, <span class="at">plot=</span>out_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>You do not need to save the plot into a variable before saving it to file. If you do not specify the <code>plot</code> argument of the <code>ggsave</code> function, <code>ggsave</code> will take the last plot that you plotted and save it into the <code>filename</code> specified.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#save plot to file</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename=</span><span class="st">"img_output/plot_weight_hindfoot_density2d.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>You can create folders straight from RStudio from the right bottom pane in the Files section &gt; New Folder icon.</li>
+</ul>
+<p><img src="images/new_folder.png" width="200"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="transforming-data---dplyr" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="transforming-data---dplyr"><span class="header-section-number">4.6</span> Transforming data - dplyr</h2>
+<p>In most of the cases you will need to change the format of your dataset because it will not be in the right format that you will need to plot or analyse the data. <code>tidyverse</code> has a package called <code>dplyr</code> which contains functions that help you to select columns/rows, sort, combine and perform other data types of data transformations. In the next sections we will look at different ways to transform our dataset. Now that we already know the basics of visualising data with <code>ggplot</code> we will also learn how to visualise other plots with the transformed dataset as we go along.</p>
+<blockquote class="blockquote">
+<p>To learn more about <code>dplyr</code> please look at the following resources:</p>
+<ul>
+<li><a href="https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf">dplyr cheat sheet</a></li>
+<li><a href="https://dplyr.tidyverse.org/">dplyr documentation</a></li>
+</ul>
+<p>If you find these resources difficult to understand, return to these after completing the course.</p>
+</blockquote>
+<section id="selecting-columns" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="selecting-columns"><span class="header-section-number">4.6.1</span> Selecting columns</h3>
+<p>To select columns of a data frame or tibble, use the<code>select</code> function. The first argument is the data frame or tibble you are working on (in our example it is <code>surveys</code>), and the subsequent arguments are the columns to keep.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#extract species_id, weight, hindfoot_length, year and sex columns from surveys dataset.</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(surveys, species_id, weight, hindfoot_length, year, sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To select all columns <em>except</em> certain ones, put a <code>-</code> in front of the column to exclude it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#select all columns of the surveys dataset apart from record_id and species_id columns.</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(surveys, <span class="sc">-</span>record_id, <span class="sc">-</span>species_id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="filtering-rows" class="level3" data-number="4.6.2">
+<h3 data-number="4.6.2" class="anchored" data-anchor-id="filtering-rows"><span class="header-section-number">4.6.2</span> Filtering rows</h3>
+<p>To remove rows from a data frame or tibble use the <code>filter</code> function from the <code>dplyr</code> package. The first argument is the data frame or tibble to perform the filtering on and the next arguments are the conditions on which to keep the rows.</p>
+<section id="filtering-rows-by-values" class="level4" data-number="4.6.2.1">
+<h4 data-number="4.6.2.1" class="anchored" data-anchor-id="filtering-rows-by-values"><span class="header-section-number">4.6.2.1</span> Filtering rows by values</h4>
+<p>To choose rows based on a specific condition, use the <code>filter</code> function as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#keep only the observations of animals collected from 1995 onwards from the surveys dataset.</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(surveys, year <span class="sc">&gt;=</span> <span class="dv">1995</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can filter on multiple conditions:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#keep only the observations of animals collected from 1995 onwards</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co">#that are female from the surveys dataset.</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(surveys, year<span class="sc">&gt;=</span><span class="dv">1995</span> <span class="sc">&amp;</span> sex<span class="sc">==</span><span class="st">"F"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="remove-rows-with-na-missing-values" class="level4" data-number="4.6.2.2">
+<h4 data-number="4.6.2.2" class="anchored" data-anchor-id="remove-rows-with-na-missing-values"><span class="header-section-number">4.6.2.2</span> Remove rows with <code>NA</code> (missing) values</h4>
+<p>When we were plotting <code>weight</code> against <code>hindfoot_length</code> in the previous section, you must have noticed that we were getting a warning message:</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 4048 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+</div>
+<p>This is because some of the values in the <code>weight</code> and <code>hindfoot_length</code> are <code>NA</code>. <code>NA</code> is short for <strong>Not Available</strong> and essentially it means that there is no data for that particular index in the table. We also refer to this as <strong>missing data</strong>. <code>ggplot</code> does not plot the observations that have missing data and outputs the warning above which shows the number of observations that have missing data in the dataset we are plotting. We can filter these rows before we plot them so that <code>ggplot</code> will have all the values for the observations it is plotting and so no warning will be displayed.</p>
+<p>The <code>is.na</code> function returns <code>TRUE</code> if the value passed to it is <code>NA</code>. Applied to a vector or data frame it will return <code>TRUE</code> or <code>FALSE</code> for each index in the vector or data frame depending on whether the value at each index is missing or not. The <code>!</code> symbol negates the result, so <code>!is.na</code> can be interpreted as <strong>is not NA</strong>. See how this can be used in the code below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#which values of the weight column are missing?</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(surveys<span class="sc">$</span>weight)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co">#which values of the weight column are not missing?</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span><span class="fu">is.na</span>(surveys<span class="sc">$</span>weight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now let us apply the <code>is.na</code> function in <code>dplyr</code>’s <code>filter</code> function to remove the rows that have <code>weight</code> or <code>hindfoot_length</code> as <code>NA</code> from the <code>surveys</code> tibble.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(surveys, </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">!</span><span class="fu">is.na</span>(weight) <span class="sc">&amp;</span>  <span class="co">#remove rows that have weight as NA</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">!</span><span class="fu">is.na</span>(hindfoot_length))  <span class="co">#remove rows that have hindfoot_length as NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Another way to remove rows that have <code>NA</code> values is by using the <code>drop_na</code> function in the <code>tidyr</code> package. The code above can be replaced by the following code which gives the same answer:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">drop_na</span>(surveys, weight, hindfoot_length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 30,738 × 13
+   record…¹ month   day  year plot_id speci…² sex   hindf…³ weight genus species
+      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  
+ 1      845     5     6  1978       2 NL      M          32    204 Neot… albigu…
+ 2     1164     8     5  1978       2 NL      M          34    199 Neot… albigu…
+ 3     1261     9     4  1978       2 NL      M          32    197 Neot… albigu…
+ 4     1756     4    29  1979       2 NL      M          33    166 Neot… albigu…
+ 5     1818     5    30  1979       2 NL      M          32    184 Neot… albigu…
+ 6     1882     7     4  1979       2 NL      M          32    206 Neot… albigu…
+ 7     2133    10    25  1979       2 NL      F          33    274 Neot… albigu…
+ 8     2184    11    17  1979       2 NL      F          30    186 Neot… albigu…
+ 9     2406     1    16  1980       2 NL      F          33    184 Neot… albigu…
+10     3000     5    18  1980       2 NL      F          31     87 Neot… albigu…
+# … with 30,728 more rows, 2 more variables: taxa &lt;chr&gt;, plot_type &lt;chr&gt;, and
+#   abbreviated variable names ¹​record_id, ²​species_id, ³​hindfoot_length</code></pre>
+</div>
+</div>
+<p>Using <code>drop_na()</code> without specifying any columns will remove all the rows that have <code>NA</code> in any of the columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">drop_na</span>(surveys)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 30,676 × 13
+   record…¹ month   day  year plot_id speci…² sex   hindf…³ weight genus species
+      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  
+ 1      845     5     6  1978       2 NL      M          32    204 Neot… albigu…
+ 2     1164     8     5  1978       2 NL      M          34    199 Neot… albigu…
+ 3     1261     9     4  1978       2 NL      M          32    197 Neot… albigu…
+ 4     1756     4    29  1979       2 NL      M          33    166 Neot… albigu…
+ 5     1818     5    30  1979       2 NL      M          32    184 Neot… albigu…
+ 6     1882     7     4  1979       2 NL      M          32    206 Neot… albigu…
+ 7     2133    10    25  1979       2 NL      F          33    274 Neot… albigu…
+ 8     2184    11    17  1979       2 NL      F          30    186 Neot… albigu…
+ 9     2406     1    16  1980       2 NL      F          33    184 Neot… albigu…
+10     3000     5    18  1980       2 NL      F          31     87 Neot… albigu…
+# … with 30,666 more rows, 2 more variables: taxa &lt;chr&gt;, plot_type &lt;chr&gt;, and
+#   abbreviated variable names ¹​record_id, ²​species_id, ³​hindfoot_length</code></pre>
+</div>
+</div>
+<p>Let us save the results of this in <code>surveys_complete</code> variable which contains only the rows that have all the values in all the columns present and use this for the remaining of the course.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>surveys_complete <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(surveys)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="pipes" class="level3" data-number="4.6.3">
+<h3 data-number="4.6.3" class="anchored" data-anchor-id="pipes"><span class="header-section-number">4.6.3</span> Pipes</h3>
+<p>What if you want to <code>select</code> and <code>filter</code> at the same time? There are three ways to do this:</p>
+<ul>
+<li>use intermediate steps</li>
+<li>nested functions</li>
+<li>pipes</li>
+</ul>
+<p>With intermediate steps, you create a temporary data frame and use that as input to the next function, like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>surveys2 <span class="ot">&lt;-</span> <span class="fu">select</span>(surveys_complete, species_id, weight, hindfoot_length, year, sex)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>surveys_recent <span class="ot">&lt;-</span> <span class="fu">filter</span>(surveys2, year <span class="sc">&gt;=</span> <span class="dv">1995</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is readable, but can clutter up your workspace with lots of objects that you have to name individually. With multiple steps, that can be hard to keep track of.</p>
+<p>You can also nest functions (<em>i.e.,</em> one function inside of another), like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>surveys_recent <span class="ot">&lt;-</span> <span class="fu">filter</span>(</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">select</span>(surveys_complete, species_id, weight, hindfoot_length, year, sex)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                    , year <span class="sc">&gt;=</span> <span class="dv">1995</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is handy, but can be difficult to read if too many functions are nested, as R evaluates the expression from the inside out (in this case, selecting, then filtering).</p>
+<p>The last option, <strong>pipes</strong>, are a recent addition to R. Pipes let you take the output of one function and send it directly to the next, which is useful when you need to do many things to the same dataset. Pipes in R look like <code>%&gt;%</code> and are made available via the <strong><code>magrittr</code></strong> package, installed automatically with <code>dplyr</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>surveys_complete <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species_id, weight, hindfoot_length, year, sex) <span class="sc">%&gt;%</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">1995</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the above code, we use the pipe to send the <code>surveys_complete</code> dataset first through <code>select</code> and then through <code>filter</code>. Some may find it helpful to read the pipe like the word “then”. For instance, in the above example, we took the tibble <code>surveys_complete</code>, <em>then</em> we <code>select</code>ed columns <code>species_id</code>, <code>weight</code>, <code>hindfoot_length</code>, <code>year</code>and <code>sex</code>. We then <code>filter</code>ed the rows and only kept the ones that have <code>year &gt;= 1995</code>.</p>
+<p>Since <code>%&gt;%</code> takes the object on its left and passes it as the first argument to the function on its right, we don’t need to explicitly include the data frame/tibble as an argument to the <code>select</code> and <code>filter</code> functions any more. This is one of the biggest advantages of using pipes as it allows us to perform all the operations that we need to do with the need to create useless variables and store useless data. Furthermore, the code is more readable when using pipes. The <code>dplyr</code> functions by themselves are somewhat simple, but by combining them into linear workflows with the pipe, we can accomplish more complex manipulations of data frames/tibbles.</p>
+<p>If we want to create a new object with the transformed data we can assign it a new name as below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>surveys_recent <span class="ot">&lt;-</span> surveys_complete <span class="sc">%&gt;%</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">select</span>(species_id, weight, hindfoot_length, year, sex) <span class="sc">%&gt;%</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">1995</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>surveys_recent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="exercise-8" class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Level: <img src="images/stars-level-2.png" class="img-fluid"></p>
+<p>Subset the <code>surveys_complete</code> data to keep only the <code>species_id</code>, <code>weight</code>, <code>hindfoot_length</code>, <code>year</code> and <code>sex</code> columns and the animals collected on and after 1995. Then plot a scatter plot of <code>weight</code> (x-axis) against <code>hindfoot_length</code> (y-axis) using this transformed dataset. Do all the above using pipes, without creating any variables.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution for Exercise 8
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell" data-answer="true">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>surveys_complete <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#select columns</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species_id, weight, hindfoot_length, year, sex) <span class="sc">%&gt;%</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#filter rows</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">1995</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#plot transformed data</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>weight, <span class="at">y=</span>hindfoot_length)) <span class="sc">+</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="exercise-9" class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 9
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Level: <img src="images/stars-level-3.png" class="img-fluid"></p>
+<p>Plot all the animals in the <code>surveys_complete</code> dataset as <code>weight</code> (x-axis) against <code>hindfoot_length</code> (y-axis). Use the dataset created above which contains only the animals that were collected on and after 1995 and highlight these points in red in the plot.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution for Exercise 9
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell" data-answer="true">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>survey_recent <span class="ot">&lt;-</span> surveys_complete <span class="sc">%&gt;%</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">select</span>(species_id, weight, hindfoot_length, year, sex) <span class="sc">%&gt;%</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">1995</span>)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>weight, <span class="at">y=</span>hindfoot_length)) <span class="sc">+</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>surveys_complete) <span class="sc">+</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>survey_recent, <span class="at">color=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the example above we did not specify the <code>data</code> argument in the <code>ggplot</code> function because the arguments in the <code>ggplot</code> function should be common throughout the whole plot. In this case we specified the respective data as separate layers in 2 different <code>geom_point</code> plots; the first plot is the data with all the animals in <code>surveys_complete</code> (points in black), the second plot is layered on top of the first plot which is a subset of the <code>surveys_complete</code> dataset (points in red).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-new-columns" class="level3" data-number="4.6.4">
+<h3 data-number="4.6.4" class="anchored" data-anchor-id="creating-new-columns"><span class="header-section-number">4.6.4</span> Creating new columns</h3>
+<p>Frequently you’ll want to create new columns based on the values in existing columns, for example to do unit conversions, or to find the ratio of values in two columns. For this we’ll use the <code>mutate</code> function.</p>
+<p>To create a new column of weight in kg:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>surveys_complete <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">weight_kg =</span> weight <span class="sc">/</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 30,676 × 14
+   record…¹ month   day  year plot_id speci…² sex   hindf…³ weight genus species
+      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  
+ 1      845     5     6  1978       2 NL      M          32    204 Neot… albigu…
+ 2     1164     8     5  1978       2 NL      M          34    199 Neot… albigu…
+ 3     1261     9     4  1978       2 NL      M          32    197 Neot… albigu…
+ 4     1756     4    29  1979       2 NL      M          33    166 Neot… albigu…
+ 5     1818     5    30  1979       2 NL      M          32    184 Neot… albigu…
+ 6     1882     7     4  1979       2 NL      M          32    206 Neot… albigu…
+ 7     2133    10    25  1979       2 NL      F          33    274 Neot… albigu…
+ 8     2184    11    17  1979       2 NL      F          30    186 Neot… albigu…
+ 9     2406     1    16  1980       2 NL      F          33    184 Neot… albigu…
+10     3000     5    18  1980       2 NL      F          31     87 Neot… albigu…
+# … with 30,666 more rows, 3 more variables: taxa &lt;chr&gt;, plot_type &lt;chr&gt;,
+#   weight_kg &lt;dbl&gt;, and abbreviated variable names ¹​record_id, ²​species_id,
+#   ³​hindfoot_length</code></pre>
+</div>
+</div>
+<p>You can also create a second new column based on the first new column within the same call of <code>mutate()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>surveys_complete <span class="sc">%&gt;%</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">weight_kg =</span> weight <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">weight_kg2 =</span> weight_kg <span class="sc">*</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 30,676 × 15
+   record…¹ month   day  year plot_id speci…² sex   hindf…³ weight genus species
+      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  
+ 1      845     5     6  1978       2 NL      M          32    204 Neot… albigu…
+ 2     1164     8     5  1978       2 NL      M          34    199 Neot… albigu…
+ 3     1261     9     4  1978       2 NL      M          32    197 Neot… albigu…
+ 4     1756     4    29  1979       2 NL      M          33    166 Neot… albigu…
+ 5     1818     5    30  1979       2 NL      M          32    184 Neot… albigu…
+ 6     1882     7     4  1979       2 NL      M          32    206 Neot… albigu…
+ 7     2133    10    25  1979       2 NL      F          33    274 Neot… albigu…
+ 8     2184    11    17  1979       2 NL      F          30    186 Neot… albigu…
+ 9     2406     1    16  1980       2 NL      F          33    184 Neot… albigu…
+10     3000     5    18  1980       2 NL      F          31     87 Neot… albigu…
+# … with 30,666 more rows, 4 more variables: taxa &lt;chr&gt;, plot_type &lt;chr&gt;,
+#   weight_kg &lt;dbl&gt;, weight_kg2 &lt;dbl&gt;, and abbreviated variable names
+#   ¹​record_id, ²​species_id, ³​hindfoot_length</code></pre>
+</div>
+</div>
+<p>There are other ways on how to create new columns. Refer to the dplyr cheat sheet <em>Make New Variables</em> section.</p>
+<div id="exercise-10" class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 10
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Level: <img src="images/stars-level-3.png" class="img-fluid"></p>
+<p>Using the <code>surveys_complete</code> dataset, create a <a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">boxplot</a> for each year on the x-axis and weight in kg on the y-axis. Filter the dataset so that only recent observations (from 1995 onwards) are used. As before try to do all the operations using pipes, without creating variables.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution for Exercise 10
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Your first attempt would be to use the code we used before to subset the <code>surveys_complete</code> dataset, but also adding the <code>mutate</code> function to add a new <code>weight_kg</code> column. Further more you will need to also add the <code>ggplot</code> function to draw a boxplot:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>surveys_complete <span class="sc">%&gt;%</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#add weight_kg column</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">weight_kg =</span> weight <span class="sc">/</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#filter rows</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">1995</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#plot transformed data</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>weight_kg)) <span class="sc">+</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Continuous x aesthetic
+ℹ did you forget `aes(group = ...)`?</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="tidyverse1_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>You might notice that this code produces a warning message about the continuous data type of the x-axis and also creates a box plot with one single box and whisker averaged over all the years on the x-axis, rather than one for each year in the dataset as requested. As shown in the <a href="https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf"><code>ggplot2</code> cheat sheet</a>, box plots display a discrete variable on the x-axis and a continuous variable on the y-axis. At the moment <code>year</code> is treated as a continuous variable since its data type is <code>double</code> (you can see this from the tibble). To fix this, we need to convert the data type of the <code>year</code> column to a categorical one (<code>factor</code>) so that each year can be plotted as a separate box and whisker.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>surveys_complete <span class="sc">%&gt;%</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#add weight_kg column</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">weight_kg =</span> weight <span class="sc">/</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#filter rows</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">1995</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#convert the year column to a factor</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year=</span><span class="fu">as.factor</span>(year)) <span class="sc">%&gt;%</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">#plot transformed data</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>weight_kg)) <span class="sc">+</span></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidyverse1_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Notice that since we need to keep only observations that have been observed from 1995 onwards, we need to convert the <code>year</code> column to a <code>factor</code> <em>after</em> we filter the rows, as otherwise the row filtering operation will not be possible. This is because the new <code>year</code> column of type <code>factor</code> does not have any ordering in its categories so performing <code>year &gt;= 1995</code> would not be possible.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As mentioned the boxplot is used to visualise the distribution of a continuous variable. In the example above we displayed the distribution of <code>weight</code> over the different years. The figure below illustrates the different components of the boxplot. The bottom line of the box represents the 25th quantile, middle line the 50th quantile (or median) and the top line of the box is the 75th quantile. The whiskers can be thought of as defining the boundary of the confidence intervals of the distribution. The dots outside these whiskers are the outliers.</p>
+<center>
+<img src="images/boxplot.png" width="60%">
+</center>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-Wickham2023" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">H Wickham, G. G., M Çetinkaya-Rundel. <em>R for data science</em>. (O’Reily Media, 2023).</div>
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1">https://readr.tidyverse.org/
+<p></p>
+<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./starting-with-data.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Starting with data</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

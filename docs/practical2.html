@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Alexia Cardona">
 
-<title>R Practicals for NST Part III Systems Biology - References</title>
+<title>R Practicals for NST Part III Systems Biology - Practical 2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,26 +21,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -49,7 +31,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./tidyverse1.html" rel="prev">
+<link href="./getting-started.html" rel="next">
+<link href="./practical1.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -92,7 +75,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./practical2.html">Practical 2</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -131,7 +114,7 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./practical2.html" class="sidebar-item-text sidebar-link">
+  <a href="./practical2.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Practical 2</span></a>
   </div>
 </li>
@@ -183,7 +166,7 @@ div.csl-indent {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link active">
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -193,21 +176,49 @@ div.csl-indent {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#data-visualisation-and-manipulation-in-r" id="toc-data-visualisation-and-manipulation-in-r" class="nav-link active" data-scroll-target="#data-visualisation-and-manipulation-in-r">Data Visualisation and Manipulation in R</a>
+  <ul class="collapse">
+  <li><a href="#aim" id="toc-aim" class="nav-link" data-scroll-target="#aim">Aim</a></li>
+  <li><a href="#objectives" id="toc-objectives" class="nav-link" data-scroll-target="#objectives">Objectives</a></li>
+  <li><a href="#instructions" id="toc-instructions" class="nav-link" data-scroll-target="#instructions">Instructions</a>
+  <ul class="collapse">
+  <li><a href="#exercises-levels" id="toc-exercises-levels" class="nav-link" data-scroll-target="#exercises-levels">Exercises levels</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">References</h1>
+<h1 class="title">Practical 2</h1>
 </div>
 
 
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Alexia Cardona </p>
+  </div>
+    <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Department of Genetics, University of Cambridge
+          </p>
+      </div>
+    </div>
 
 <div class="quarto-title-meta">
 
-    
+      
   
     
   </div>
@@ -215,20 +226,114 @@ div.csl-indent {
 
 </header>
 
-<p>Practical 1 was adapted from The Data Carpentry R Ecology Lesson<span class="citation" data-cites="Michonneau2019"><sup><a href="references.html#ref-Michonneau2019" role="doc-biblioref">1</a></sup></span>.</p>
-<div id="refs" class="references csl-bib-body" data-line-spacing="2" role="list">
-<div id="ref-Michonneau2019" class="csl-entry" role="listitem">
-<div class="csl-left-margin">1. </div><div class="csl-right-inline">Michonneau F, F. A., Teal T. Data carpentry:
-Data analysis and visualization in r for ecologists. (2019) doi:<a href="https://doi.org/10.5281/zenodo.3264888">10.5281/zenodo.3264888</a>.</div>
+<section id="data-visualisation-and-manipulation-in-r" class="level1 unnumbered">
+<h1 class="unnumbered">Data Visualisation and Manipulation in R</h1>
+<section id="aim" class="level2">
+<h2 class="anchored" data-anchor-id="aim">Aim</h2>
+<p>The aim of this practical is to introduce you to tidyverse and learn how we can visualise data using ggplot2 and data manipulation using dplyr.</p>
+</section>
+<section id="objectives" class="level2">
+<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<p>During this practical you will learn:</p>
+<ul>
+<li>about the data science workflow</li>
+<li>how to load packages in R</li>
+<li>use tidyverse to perform data operations</li>
+<li>visualise data with ggplot</li>
+<li>transform data with dplyr</li>
+</ul>
+</section>
+<section id="instructions" class="level2">
+<h2 class="anchored" data-anchor-id="instructions">Instructions</h2>
+<p>The best way to do this practical is to read the Practical Notes which will introduce you to the core concepts of R programming. These notes are designed with all the details you would need to be able to perform the exercises in this practical. In general, you would not need to refer to additional texts and resources as these notes have been explained in detail. Apart from the exercises listed below, there are also examples throughout the notes which provide insight on the concepts introduced, and therefore, it is recommended that you also run these examples as you progress through the practical notes.</p>
+<p><strong>If you are an experienced R programmer</strong>, you might find that you already know about the content in these notes. You may want to skip sections of notes that you already know and attempt the exercises that are at the higher levels.</p>
+<section id="exercises-levels" class="level3">
+<h3 class="anchored" data-anchor-id="exercises-levels">Exercises levels</h3>
+<p>Exercises in this practical are labelled with the level of difficulty of the respective exercise:</p>
+<table class="table">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 65%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Level</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="images/stars-level-1.png" class="img-fluid"></td>
+<td><strong>Level 1</strong>: Exercises in Level 1 are simple exercises designed to get you familiar with the R syntax. If you already know how to program in R, you may skip these exercises.</td>
+</tr>
+<tr class="even">
+<td><img src="images/stars-level-2.png" class="img-fluid"></td>
+<td><strong>Level 2</strong>: Exercises in Level 2 combine different R programming concepts to solve simple problems.</td>
+</tr>
+<tr class="odd">
+<td><img src="images/stars-level-2.png" class="img-fluid"></td>
+<td><strong>Level 3</strong>: Exercises in Level 3 solve more complex problems.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="exercises" class="level3">
+<h3 class="anchored" data-anchor-id="exercises">Exercises</h3>
+<p>This practical is composed of the following exercises:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Exercise</th>
+<th>Description</th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="./tidyverse1.html#exercise-7">Exercise 7</a></td>
+<td><strong>Drawing plots</strong>: In this exercise we will practice drawing plots.</td>
+<td><img src="images/stars-level-2.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td><a href="./tidyverse1.html#exercise-8">Exercise 8</a></td>
+<td><strong>Pipes</strong>: In this exercise we will practice using pipes.</td>
+<td><img src="images/stars-level-2.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td><a href="./tidyverse1.html#exercise-9">Exercise 9</a></td>
+<td><strong>Scatter plot highlight</strong>: This exercises uses pipes to highlight a subset in the data on a scatter plot.</td>
+<td><img src="images/stars-level-3.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td><a href="./tidyverse1.html#exercise-10">Exercise 10</a></td>
+<td><strong>Box plot</strong>: Here we will learn how to deal with categorised data and plot them in box plots.</td>
+<td><img src="images/stars-level-3.png" class="img-fluid"></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
 </div>
-<div id="ref-Wickham2023" class="csl-entry" role="listitem">
-<div class="csl-left-margin">2. </div><div class="csl-right-inline">H
-Wickham, G. G., M Çetinkaya-Rundel. <em>R for data science</em>.
-(O’Reily Media, 2023).</div>
+<div class="callout-title-container flex-fill">
+Managed to solve all the exercises? Second badge earned!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><br> In the programming world, many organisations award badges to learners on the acquisition of a new skill or completion of a milestone. If you attempted and solved all the exercises of this practical, you definitely deserve your second R badge of this course.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/level-2-badge.png" class="img-fluid figure-img" style="width:25.0%"></p>
+</figure>
+</div>
 </div>
 </div>
 
 
+</section>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -466,11 +571,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./tidyverse1.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data manipulation and visualisation with tidyverse</span></span>
+      <a href="./practical1.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Practical 1</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./getting-started.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started in R</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
