@@ -38,7 +38,7 @@ Exercises in this practical are labelled with the level of difficulty of the res
 |-------|-------------|
 | ![](images/stars-level-1.png) | **Level 1**: Exercises in Level 1 are simple exercises designed to get you familiar with the R syntax. If you already know how to program in R, you may skip these exercises.|
 | ![](images/stars-level-2.png) | **Level 2**: Exercises in Level 2 combine different R programming concepts to solve simple problems.|
-| ![](images/stars-level-2.png) | **Level 3**: Exercises in Level 3 solve more complex problems.
+| ![](images/stars-level-3.png) | **Level 3**: Exercises in Level 3 solve more complex problems.
 
 ### Exercises
 

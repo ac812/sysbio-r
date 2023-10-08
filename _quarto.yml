@@ -10,6 +10,7 @@ book:
     - index.qmd
     - practical1.qmd
     - practical2.qmd
+    - practical3.qmd
     
     - part: "Practical 1 Notes"
       chapters: 
@@ -20,6 +21,10 @@ book:
     - part: "Practical 2 Notes"
       chapters: 
         - tidyverse1.qmd
+        
+    - part: "Practical 3 Notes"
+      chapters: 
+        - tidyverse2.qmd
 
     - references.qmd
 

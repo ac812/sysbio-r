@@ -147,9 +147,10 @@ Let us practice this on our `surveys` dataset. We would like to create a scatter
 ggplot(data = surveys, mapping = aes(x = weight, y = hindfoot_length))
 ```
 
-### Adding layers
+### Adding layers {#firstplot}
 
 As you can see if you just specify the `ggplot` function with the data and aesthetic mappings, it will just create an empty plot.  Let us now add the geom_function for the scatter plot (`geom_point`) as a layer to the plot:
+
 <a name="firstplot"></a>
 ```{r, message=FALSE, warning=FALSE}
 ggplot(data = surveys, mapping = aes(x = weight, y = hindfoot_length)) +

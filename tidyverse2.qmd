@@ -1,62 +1,65 @@
+---
+title: Further data manipulation and visualisation with tidyverse
+author:
+  - name: Alexia Cardona
+    affiliations:
+      - Department of Genetics, University of Cambridge
+---
 
+
+```{r, echo=FALSE, purl=FALSE, message = FALSE}
+library(tidyverse)
+surveys <- read_csv("data/portal_data_joined.csv")
+surveys_complete <- drop_na(surveys)
+```
 
 
 ## Sorting data
 
 To sort your data `dplyr` provides function `arrange`.  
-```{r}
+
+```{r, results=FALSE}
 #sort weight in ascending order
 surveys_complete %>%
   arrange(weight)
 ```
-```{r, echo=FALSE, results=TRUE, layout="l-body-outset"}
+
+```{r, echo=FALSE}
 library(rmarkdown)
 paged_table(surveys_complete %>% arrange(weight))
 ```
 
 To sort your data in descending order you will need to use `desc()`.
-```{r}
+```{r, results=FALSE}
 #sort weight in descending order 
 surveys_complete %>%
   arrange(desc(weight))
 ```
-```{r, echo=FALSE, results=TRUE, layout="l-body-outset"}
-library(rmarkdown)
+```{r, echo=FALSE}
 paged_table(surveys_complete %>% arrange(desc(weight)))
 ```
 
 You can sort your dataset based on the values of multiple columns:
-```{r}
+```{r, results=FALSE}
 #sort weight in ascending order and hindfoot_length in descending order
 surveys_complete %>%
   arrange(weight, desc(hindfoot_length))
 ```
-```{r, echo=FALSE, results=TRUE, layout="l-body-outset"}
-library(rmarkdown)
+```{r, echo=FALSE}
 paged_table(surveys_complete %>% arrange(weight, desc(hindfoot_length)))
 ```
 As you can see from the result returned, the animals with the smallest weight are at the top.  When there is a tie, *i.e.,* more than one animal has the same weight, the animals are sorted in descending order of `hindfoot_length`. As you can see, the subset of animals with `weight` of 4 have been sorted in descending order based on `hindfoot_length`.
 
-<br/>
-
 ## Summarising data
 
 Creating summaries of your data would be a good way to start describing the variable you are working with.  Summary statistics are a good example of how one can summarise data.  We will not cover details about summary statistics in this course, but we will look at how we can summarise data in R. 
-When working with continuous variables, one of the most popular summary statistic is the mean.  If we try to caclulate the mean on `weight` in the `surveys_complete` dataset we get:
+When working with continuous variables, one of the most popular summary statistic is the mean.  If we try to calculate the mean on `weight` in the `surveys_complete` dataset we get:
 
 ```{r, error=TRUE}
 surveys_complete %>%
   mean_weight = mean(weight)
 ```
 This is because in `dplyr` you will need to use the `summarise` function to be able to create summaries of your data.  
-
-### Summarise 
-The `summarise` function is used when you want to reduce multiple values in your columns to a single value.  If we try to calculate the mean using `summarise()` this time:
-```{r, results=TRUE}
-surveys_complete %>%
-  summarise(mean_weight = mean(weight))
-```
-As seen from the result, the `mean` of the values present in the `weight` column is 41.8.  
 
 ### Frequency - `count`
 Obtaining the frequency of your data is another common way of summarising data.  Frequencies are normally calculated when working with discrete variables that have a finite number of values, such as categorical data.  In our `surveys_complete` dataset, let us obtain the frequecies of male and female animals present.  We can do this by counting the number of "M" and "F" present in the dataset.  To do this use the `dplyr` function `count` as follows:
@@ -73,25 +76,34 @@ surveys_complete %>%
   count(sex, species) 
 ```
 
-> ### Challenge
->
->1. How many animals were observed in each `plot_type` surveyed?
->
-> ```{r, answer=TRUE}
->surveys_complete %>%
->     count(plot_type) 
-> ```
->
->
->2. What is the frequency of each species of each sex observed?  Sort each species in descending order of freqency.
->
->```{r, answer=TRUE}
->surveys_complete %>%
->  count(sex, species) %>%
->  arrange(species, desc(n))
->```
+:::{#exercise-11 .callout-note icon=false}
 
-<br/>
+## Exercise 11 {#exercise-11}
+Level:  ![](images/stars-level-2.png)
+
+a.  Using the `surveys_complete` variable, how many animals were observed in each `plot_type` surveyed?
+
+b.  What is the frequency of each species of each sex observed?  Sort each species in descending order of frequency.
+
+
+:::{.callout-note icon=false collapse=true}
+## Solution for Exercise 11
+
+a. 
+```{r}
+surveys_complete %>%
+     count(plot_type) 
+```
+
+
+b.
+```{r, answer=TRUE}
+surveys_complete %>%
+  count(sex, species) %>%
+  arrange(species, desc(n))
+```
+:::
+:::
 
 ## Plotting time series data - `geom_line()` {#timeseries}
 
@@ -128,12 +140,53 @@ ggplot(data = yearly_counts, mapping = aes(x = year, y = n, color = genus)) +
     geom_line()
 ```
 
-<br/>
+## Plotting single continuous variables - histograms
+
+If you would like to plot the distribution of a **single continuous variable** the frequency will be automatically calculated, so you do not need to use `count()` to calculate the frequency beforehand.  Histograms are one of the most popular ways to do this. In a histogram, the x-axis is automatically divided into bins and the number of observations of the continuous variable in each bin is shown as a bar in the histogram.  In the `ggplot2` package a histogram can be plotted using the `geom_histogram` function.  
+
+Let us plot a histogram for the continuous variable `weight`:
+```{r, fig.show=TRUE, message=FALSE}
+ggplot(surveys_complete, aes(weight)) +
+  geom_histogram()
+```
+You can identify display categories in the histogram by plotting a stacked histogram which will show categories for each group stacked on top of each other.  This is done by using the `fill` argument in the aesthetic function.  If we want to display `sex` in our `weight` histogram:
+
+```{r, fig.show=TRUE, message=FALSE}
+ggplot(surveys_complete, aes(weight, fill=sex)) +
+  geom_histogram(bins=100)
+```
+Note that the default number of bins in a histogram is 30.  To get a more granular display you can increase the number of bins by using the argument `bins` in the `geom_histogram` function as above.
+
+There are other plots that can be used for a single continuous variable (see ONE VARIABLE continuous section on [ggplot2 cheat sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf)).
+
+
+:::{#exercise-12 .callout-note icon=false}
+
+## Exercise 12 {#exercise-12}
+Level:  ![](images/stars-level-1.png)
+
+Use the `geom_freqpoly()` to display frequency polygons instead of bars for the distribution of `weight`.  Show `sex` category as before in a different colour.  
+
+::: {.callout-tip}
+## Hint
+Use the argument `color` in the aesthetic function rather than `fill` to display a frequency polygon for each `sex` category in a different colour.  
+:::
+
+:::{.callout-note icon=false collapse=true}
+## Solution for Exercise 12
+
+```{r, message=FALSE}
+ggplot(surveys_complete, aes(weight, color=sex)) +
+  geom_freqpoly()
+```
+:::
+:::
 
 ## Grouping data
-In the examples above we learnt how to summarise data over all observations, *e.g.,* we calculated the mean over all observations using the `summarise` function. However, in data analysis, especially when dealing with big data, a common approach to data exploration is the [**split-apply-combine**](https://www.jstatsoft.org/article/view/v040i01) strategy. The idea behind this strategy is to split the data into more managable pieces, apply any operations required on the data independently on each piece and then combine the results together. The figure below illustrates the approach that is done in the split-apply-combine approach.
 
-![](img/split-apply-combine.svg)  
+In the examples above we learnt how to summarise data over all observations, *e.g.,* we calculated the mean over all observations using the `summarise` function. However, in data analysis, especially when dealing with big data, a common approach to data exploration is the [**split-apply-combine**](https://www.jstatsoft.org/article/view/v040i01) strategy. The idea behind this strategy is to split the data into more manageable pieces, apply any operations required on the data independently on each piece and then combine the results together. The figure below illustrates the approach that is done in the split-apply-combine approach.
+
+![](images/split-apply-combine.svg)  
 
 Let us work on an example on how we can apply the split-apply-combine strategy on the `surveys_complete` dataset.  We would like to split the data by the different categories present in the `sex` column and calculate the mean weight for each category.  We can do this as follows:
 
@@ -174,48 +227,56 @@ surveys_complete %>%
             min_weight = min(weight))
 ```
 
-> ### Challenge
->
->1. Use `group_by()` and `summarise()` to find the mean, min, and max hindfoot
-> length for each species (using `species_id`). Also add the number of
-> observations (hint: see `?n`).
->
-> ```{r, answer=TRUE, results=TRUE}
-> surveys_complete %>%
->     group_by(species_id) %>%
->     summarise(
->         mean_hindfoot_length = mean(hindfoot_length),
->         min_hindfoot_length = min(hindfoot_length),
->         max_hindfoot_length = max(hindfoot_length),
->         n = n()
->     )
->```
->
->2. What was the heaviest animal measured in each year? Return the columns `year`,
-> `genus`, `species`, and `weight`.
->
-> ```{r, answer=TRUE, results=TRUE}
-> surveys_complete %>%
->     group_by(year) %>%
->     filter(weight == max(weight)) %>%
->     select(year, genus, species_id, weight) %>%
->     arrange(year)
-> ```
+:::{#exercise-13 .callout-note icon=false}
 
-<br/>
+## Exercise 13 {#exercise-13}
+Level:  ![](images/stars-level-3.png)
 
-# Further visualisations
+a. Use `group_by()` and `summarise()` to find the `mean`, `min`, `max` hind foot length for each species (using `species_id`) and the number of observations for each species (hint: look into function `n()`).
 
-## Facetting
+b. What was the heaviest animal measured in each year? Return the columns `year`, `genus`, `species`, and `weight`.
+
+:::{.callout-note icon=false collapse=true}
+## Solution for Exercise 13
+
+a. 
+
+```{r, results=TRUE}
+surveys_complete %>%
+   group_by(species_id) %>%
+   summarise(
+       mean_hindfoot_length = mean(hindfoot_length),
+       min_hindfoot_length = min(hindfoot_length),
+       max_hindfoot_length = max(hindfoot_length),
+       n = n()
+   )
+```
+
+b.
+```{r, results=TRUE}
+surveys_complete %>%
+   group_by(year) %>%
+   filter(weight == max(weight)) %>%
+   select(year, genus, species_id, weight) %>%
+   arrange(year)
+```
+:::
+:::
+
+
+
+## Further visualisations
+
+### Facetting
 
 The `ggplot2` package has a way of creating different plots based on the different categories in the data.  This is known as **facetting**.  With facetting we do not need to use `group_by()` to split the data into different groups to be able to plot the different categories in different plots as `ggplot2` does this automatically.
 
 There are two types of `facet` functions:
 
-- `facet_wrap()` arranges the different plots into muliple rows and columns to cleanly fit on one page.
+- `facet_wrap()` arranges the different plots into multiple rows and columns to cleanly fit on one page.
 - `facet_grid()` plots all the categories in 1 row or 1 column.
 
-Let us see this in action.  When we plotted a [time series plot](#timeseries), we created a line for each different genus.  Given there are several genera, it would be more clearer if we plotted each line is a seperate plot, one plot for each genus.  Facetting will do this very easily.  Let us start with `facet_wrap()`.  We supply the variable that we would like to group upon within `vars()` as following:
+Let us see this in action.  When we plotted a [time series plot](#timeseries), we created a line for each different genus.  Given there are several genera, it would be more clearer if we plotted each line is a separate plot, one plot for each genus.  Facetting will do this very easily.  Let us start with `facet_wrap()`.  We supply the variable that we would like to group upon within `vars()` as following:
 
 ```{r, fig.show=TRUE}
 ggplot(data = yearly_counts, mapping = aes(x = year, y = n)) +
@@ -232,7 +293,7 @@ ggplot(data = yearly_counts, mapping = aes(x = year, y = n)) +
 
 The pattern of the graphs that before were hardly visible, *e.g.,* Baiomys, is now clear as the axes have been rescaled to fit the data.  This is the main advantage of using **free scales**.  The disadvantage is that the different plots are not comparable as before.  
 
-If we would like to see if there is any difference between the `sex`, we can do this by adding `sex` as another grouping to `count()`.
+If we would like to check if there is any difference between the `sex`, we can do this by adding `sex` as another grouping to `count()`.
 ```{r}
 yearly_sex_counts <- surveys_complete %>%
                       count(year, genus, sex)
@@ -241,7 +302,7 @@ yearly_sex_counts <- surveys_complete %>%
 ```{r, echo=FALSE, results=TRUE}
 yearly_sex_counts
 ```
-This should now allow us to also split by `sex`.  We can use colour to distinguish between the `sex` categories:
+This should now allow us to also visualise the same data for the different `sex` categories.  We can use colour to distinguish between the `sex` categories:
 ```{r, fig.show=TRUE}
 ggplot(data = yearly_sex_counts, mapping = aes(x = year, y = n, color = sex)) +
   geom_line() +
@@ -270,24 +331,32 @@ ggplot(data = yearly_sex_counts,
 >More information on further functionality of facetting can be found in the [`facet_wrap()`](https://ggplot2.tidyverse.org/reference/facet_wrap.html) and [`facet_grid()`](https://ggplot2.tidyverse.org/reference/facet_grid.html) documentation.  
 
 
-> ### Challenge
->
->Instead of splitting the plots based on `sex` display the `sex` as different coloured line graphs in the same plot.
->
->```{r, answer=TRUE}
+:::{#exercise-14 .callout-note icon=false}
+
+## Exercise 14 {#exercise-14}
+Level:  ![](images/stars-level-2.png)
+
+Using the `yearly_sex_counts` variable above, but instead of splitting the plots by sex as above, draw the frequency of each genus as in [here](#facet_grid_row)
+and display the `sex` as different coloured line graphs in the same plot.
+
+:::{.callout-note icon=false collapse=true}
+## Solution for Exercise 14
+
+```{r}
 ggplot(data = yearly_sex_counts, 
   mapping = aes(x = year, y = n, color=sex)) +
   geom_line() +
   facet_grid(cols = vars(genus))
->```
+```
+:::
+:::
 
-<br/>
 
-## Customisation (optional)
+### Customisation
 
-Though the default visualisation of `ggplot2` plots is already at a good standard, there are several ways one can improve even further the visualisations.  
+Though the default visualisation of `ggplot2` plots is already at a good standard, there are several ways one can improve ggplot2 visualisations for publications.  
 
-### Labels
+#### Labels
 
 Let us start customising the last plot we have plotted by renaming the axes and adding a title to the plot.  This is done by using the [`labs`](https://ggplot2.tidyverse.org/reference/labs.html) function:
 
@@ -300,7 +369,7 @@ ggplot(data = yearly_sex_counts, mapping = aes(x = year, y = n)) +
        y = "Number of animals")
 ```
          
-The major item that needs fixing in the plot is the text on the x-axis as this crammed and is not readable at the moment. This is mainly due to the fact that the size of the plot is dependent on the size of the window (in this case RStudio).  You can work around this by saving your plot to a file and specifying the width of the plot ([see Saving a plot to a file section](#saveplot)). **Themes** in the `ggplot2` package control the display of all non-data elements of the plot.  Let us start customising the text on the x-axis by changing its size and position using the `theme` function.  Note that `theme()` has several other arguments and you can read more about them in the [`theme()` documentation](https://ggplot2.tidyverse.org/reference/theme.html).
+The major item that needs fixing in the plot is the text on the x-axis as this is crammed and is not readable at the moment. This is mainly due to the fact that the size of the plot is dependent on the size of the window (in this case RStudio).  You can work around this by saving your plot to a file and specifying the width of the plot ([see Saving a plot to a file section](#saveplot)). **Themes** in the `ggplot2` package control the display of all non-data elements of the plot.  Let us start customising the text on the x-axis by changing its size and position using the `theme` function.  Note that `theme()` has several other arguments and you can read more about them in the [`theme()` documentation](https://ggplot2.tidyverse.org/reference/theme.html).
 
 ```{r, fig.show=TRUE}         
 ggplot(data = yearly_sex_counts, mapping = aes(x = year, y = n, color=sex)) +
@@ -315,9 +384,9 @@ ggplot(data = yearly_sex_counts, mapping = aes(x = year, y = n, color=sex)) +
 ```
          
          
-### Legend
+#### Legend
 
-With the plot already looking better, the last thing we would like to change is the legend.  Legends are very tricky in `ggplot2` as the fuction to use is determined by the data that is being displayed.  In this case the legend has been created based on color groupings.  Therefore we can change the lengend title, categories and color as follows:
+With the plot already looking better, the last thing we would like to change is the legend.  Legends are very tricky in `ggplot2` as the function to use is determined by the data that is being displayed.  In this case the legend has been created based on color groupings.  Therefore we can change the legend title, categories and colour as follows:
 
 ```{r, fig.show=TRUE}         
 ggplot(data = yearly_sex_counts, mapping = aes(x = year, y = n, color=sex)) +
@@ -335,25 +404,34 @@ ggplot(data = yearly_sex_counts, mapping = aes(x = year, y = n, color=sex)) +
                        labels=c("Female", "Male"))
 ```
 
->Note: If you would like to see what other palettes are available please see [http://colorbrewer2.org/#type=qualitative&scheme=Set1&n=3](http://colorbrewer2.org/#type=qualitative&scheme=Set1&n=3).
 
-### Themes
+::: {.callout-note}
+If you would like to see what other palettes are available please have a look at  [this colour brewer website](http://colorbrewer2.org/#type=qualitative&scheme=Set1&n=3).
+:::
 
-`ggplot2` has a set of themes that can be used to change the overall appearance of the graph without much effort. For example, if we create the [first plot](#firstplot) again and apply the `theme_bw()` theme we get a more simpler white background:
+#### Themes
+
+`ggplot2` has a set of themes that can be used to change the overall appearance of the plot without much effort. For example, if we create the [first plot](#firstplot) again and apply the `theme_bw()` theme we get a more simpler white background:
 ```{r, fig.show=TRUE, warning=FALSE, message=FALSE}
 ggplot(data = surveys, mapping = aes(x = weight, y = hindfoot_length)) +
   geom_point() +
   theme_bw()
 ```
 
-A list of themes can be found in the [`ggplot2` documentation](https://ggplot2.tidyverse.org/reference/index.html#section-themes).  
+A list of themes can be found in the [ggplot2 documentation](https://ggplot2.tidyverse.org/reference/#themes).  
 
->### Challenge
->
->Use what you just learned to create a plot that depicts how the average weight of each species changes through the years.
->
->```{r, answer=TRUE, fig.show=TRUE}
->surveys_complete %>%
+:::{#exercise-15 .callout-note icon=false}
+## Exercise 15 {#exercise-15}
+
+Level:  ![](images/stars-level-3.png)
+
+Using the `surveys_complete` variable, use what you just learned to create a plot that depicts how the average weight of each species changes through the years.
+
+:::{.callout-note icon=false collapse=true}
+## Solution for Exercise 15
+
+```{r, fig.show=TRUE, message=FALSE}
+surveys_complete %>%
   group_by(year, species) %>%
   summarize(avg_weight = mean(weight)) %>%
   ggplot(mapping = aes(x=year, y=avg_weight)) +
@@ -361,11 +439,12 @@ A list of themes can be found in the [`ggplot2` documentation](https://ggplot2.t
     facet_wrap(vars(species)) +
     theme_bw() +
     theme(axis.text.x = element_text(angle=90, vjust=0.5))
->```
+```
+:::
+:::
 
-<br/>
 
-# Exporting/Writing data to files
+## Exporting/Writing data to files
 
 Now that you have learned how to use **`dplyr`** to transform your raw data, you may want to export these new datasets to share them with your collaborators or for archival.
 
@@ -384,42 +463,5 @@ re-generate them.
 Let us save the `surveys_complete` tibble in `data_output/surveys_complete.csv` file:
 
 ```{r}
-write_csv(surveys_complete, path = "data_output/surveys_complete.csv")
-
+write_csv(surveys_complete, file = "data_output/surveys_complete.csv")
 ```
-<br/>
-
-# Optional sections
-
-
-
-## Plotting histograms
-
-If you would like to plot the distribution of a **single continuous variable** the frequency will be automatically calculated, so you do not need to use `count()` to calculate the frequency beforehand.  The x-axis is automatically divided into bins and the number of observations of the continuous variable in each bin is shown as a bar in the histogram.  In the `ggplot2` package a histogram can be plotted using the `geom_histogram` function.  
-
-Let us plot a histogram for the continuous variable `weight`:
-```{r, fig.show=TRUE, message=FALSE}
-ggplot(surveys_complete, aes(weight)) +
-  geom_histogram()
-```
-You can identify display categories in the histogram by plotting a stacked histogram which will show categories for each group stacked on top of each other.  This is done by using the `fill` argument in the aesthetic function.  If we want to display `sex` in our `weight` histogram:
-
-```{r, fig.show=TRUE, message=FALSE}
-ggplot(surveys_complete, aes(weight, fill=sex)) +
-  geom_histogram(bins=100)
-```
-Note that the default number of bins in a histogram is 30.  To get have a granular display you can increase the number of bins by using the argument `bins` in the `geom_histogram` function as above.
-
-There are other plots that can be used for a single continuous variable (see ONE VARIABLE continuous section on [ggplot2 cheat sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf)).
-
-
-> ### Challenge - `geom_freqpoly()`
->
->Use the `geom_freqpoly()` to display frequency polygons instead of bars for the distribution of `weight`.  Show `sex` category as before in a different colour.  
->**Hint:** Use the argument `color` in the aesthetic function rather than `fill` to display a frequency polygon for each `sex` category in a different colour.  
->
->```{r, answer=TRUE, message=FALSE}
->ggplot(surveys_complete, aes(weight, color=sex)) +
->  geom_freqpoly()
->```
-

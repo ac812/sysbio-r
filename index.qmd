@@ -8,7 +8,6 @@ author:
 # Practicals {.unnumbered}
 
 
-
 As part of the NST Part III Systems Biology subject we will be learning R programming and foundation data visualisation and manipulation techniques that are useful not just for this course but also beyond. These core concepts are used and applied throughout the Systems Biology course.  Understanding these are key to be able to follow the rest of the course.
 
 ### Earn your badge each week
@@ -31,14 +30,14 @@ Below are the links of each practical sheet that we will be working on each week
   <tbody>
     <tr>
       <td style="border: 1px solid black;"><a href="https://ac812.github.io/sysbio-r/practical1.html"><img src="images/level-1-badge.png" alt="Badge 1"/></a></td>
-      <td style="border: 1px solid black;"><a href="https://ac812.github.io/sysbio-r/practical2.html"><img src="images/level-2-badge.png" alt="Badge 1"/></a></td>
-      <td style="border: 1px solid black;"><img src="images/level-3-badge-gray.png" alt="Badge 3" /></td>
+      <td style="border: 1px solid black;"><a href="https://ac812.github.io/sysbio-r/practical2.html"><img src="images/level-2-badge.png" alt="Badge 2"/></a></td>
+      <td style="border: 1px solid black;"><a href="https://ac812.github.io/sysbio-r/practical3.html"><img src="images/level-3-badge.png" alt="Badge 3"/></a></td>
       <td style="border: 1px solid black;"><img src="images/level-4-badge-gray.png" alt="Badge 4" /></td>
     </tr>
     <tr>
       <td style="border: 1px solid black;"><a href="https://ac812.github.io/sysbio-r/practical1.html">Go to Practical 1 &#8594;</a></td>
       <td style="border: 1px solid black;"><a href="https://ac812.github.io/sysbio-r/practical2.html">Go to Practical 2 &#8594;</a></td>
-      <td style="border: 1px solid black;">Activated after Practical 2</td>
+      <td style="border: 1px solid black;"><a href="https://ac812.github.io/sysbio-r/practical3.html">Go to Practical 3 &#8594;</a></td>
       <td style="border: 1px solid black;">Activated after Practical 3</td>
     </tr>
   </tbody>
