@@ -7,15 +7,12 @@ author:
 
 # Practicals {.unnumbered}
 
-
-As part of the NST Part III Systems Biology subject we will be learning R programming and foundation data visualisation and manipulation techniques that are useful not just for this course but also beyond. These core concepts are used and applied throughout the Systems Biology course.  Understanding these are key to be able to follow the rest of the course.
+As part of the NST Part III Systems Biology subject we will be learning R programming and foundation data visualisation and manipulation techniques that are useful not just for this course but also beyond. These core concepts are used and applied throughout the Systems Biology course. Understanding these are key to be able to follow the rest of the course.
 
 ### Earn your badge each week
-In the programming world, many organisations award badges to learners on the acquisition of a new skill or completion of 
-a milestone. If you attempted and solved all the exercises of each practical, you will earn a badge. By the end of week 
-four you will have earned the 4-star badge ![](images/stars-4-18px.png) that marks the end of the Systems Biology R practicals.   
-Below are the links of each practical sheet that we will be working on each week. 
 
+In the programming world, many organisations award badges to learners on the acquisition of a new skill or completion of a milestone. If you attempted and solved all the exercises of each practical, you will earn a badge. By the end of week four you will have earned the 4-star badge ![](images/stars-4-18px.png) that marks the end of the Systems Biology R practicals.\
+Below are the links of each practical sheet that we will be working on each week.
 
 ```{=html}
 <table style="border: 1px solid black;">
