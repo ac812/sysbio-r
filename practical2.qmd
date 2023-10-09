@@ -9,58 +9,51 @@ author:
 
 # Data Visualisation and Manipulation in R {.unnumbered}
 
-## Aim  
-The aim of this practical is to introduce you to tidyverse and learn how we can visualise data using ggplot2 and data manipulation using dplyr.  
+## Aim
+
+The aim of this practical is to introduce you to tidyverse and learn how we can visualise data using ggplot2 and data manipulation using dplyr.
 
 ## Objectives
+
 During this practical you will learn:
 
-* about the data science workflow
-* how to load packages in R
-* use tidyverse to perform data operations
-* visualise data with ggplot
-* transform data with dplyr
-
+-   about the data science workflow
+-   how to load packages in R
+-   use tidyverse to perform data operations
+-   visualise data with ggplot
+-   transform data with dplyr
 
 ## Instructions
 
-The best way to do this practical is to read the Practical Notes which will introduce you to the core concepts of R programming. 
-These notes are designed with all the details you would need to be able to perform the exercises in this practical. In 
-general, you would not need to refer to additional texts and resources as these notes have been explained in detail.  Apart from the exercises listed below, there are also examples throughout the notes which provide insight on the concepts introduced, and therefore, it is recommended that you also run these examples as you progress through the practical notes.  
+The best way to do this practical is to read the Practical Notes which will introduce you to the core concepts of R programming. These notes are designed with all the details you would need to be able to perform the exercises in this practical. In general, you would not need to refer to additional texts and resources as these notes have been explained in detail. Apart from the exercises listed below, there are also examples throughout the notes which provide insight on the concepts introduced, and therefore, it is recommended that you also run these examples as you progress through the practical notes.
 
-**If you are an experienced R programmer**, you might find that you already know about the content in these notes. You 
-may want to skip sections of notes that you already know and attempt the exercises that are at the higher levels. 
+**If you are an experienced R programmer**, you might find that you already know about the content in these notes. You may want to skip sections of notes that you already know and attempt the exercises that are at the higher levels.
 
 ### Exercises levels
+
 Exercises in this practical are labelled with the level of difficulty of the respective exercise:
 
-| Level | Description |
-|-------|-------------|
-| ![](images/stars-level-1.png) | **Level 1**: Exercises in Level 1 are simple exercises designed to get you familiar with the R syntax. If you already know how to program in R, you may skip these exercises.|
-| ![](images/stars-level-2.png) | **Level 2**: Exercises in Level 2 combine different R programming concepts to solve simple problems.|
-| ![](images/stars-level-3.png) | **Level 3**: Exercises in Level 3 solve more complex problems.
+| Level                         | Description                                                                                                                                                                   |
+|-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ![](images/stars-level-1.png) | **Level 1**: Exercises in Level 1 are simple exercises designed to get you familiar with the R syntax. If you already know how to program in R, you may skip these exercises. |
+| ![](images/stars-level-2.png) | **Level 2**: Exercises in Level 2 combine different R programming concepts to solve simple problems.                                                                          |
+| ![](images/stars-level-3.png) | **Level 3**: Exercises in Level 3 solve more complex problems.                                                                                                                |
 
 ### Exercises
 
 This practical is composed of the following exercises:
 
+| Exercise                                  | Description                                                                                                | Level                         |
+|-------------------------------------------|------------------------------------------------------------------------------------------------------------|-------------------------------|
+| [Exercise 7](tidyverse1.qmd#exercise-7)   | **Drawing plots**: In this exercise we will practice drawing plots.                                        | ![](images/stars-level-2.png) |
+| [Exercise 8](tidyverse1.qmd#exercise-8)   | **Pipes**: In this exercise we will practice using pipes.                                                  | ![](images/stars-level-2.png) |
+| [Exercise 9](tidyverse1.qmd#exercise-9)   | **Scatter plot highlight**: This exercises uses pipes to highlight a subset in the data on a scatter plot. | ![](images/stars-level-3.png) |
+| [Exercise 10](tidyverse1.qmd#exercise-10) | **Box plot**: Here we will learn how to deal with categorised data and plot them in box plots.             | ![](images/stars-level-3.png) |
 
-| Exercise                                         | Description     | Level                         |
-|----|---|--|
-| [Exercise 7](tidyverse1.qmd#exercise-7) | **Drawing plots**: In this exercise we will practice drawing plots. | ![](images/stars-level-2.png) |
-| [Exercise 8](tidyverse1.qmd#exercise-8) | **Pipes**: In this exercise we will practice using pipes. | ![](images/stars-level-2.png) |
-| [Exercise 9](tidyverse1.qmd#exercise-9) | **Scatter plot highlight**: This exercises uses pipes to highlight a subset in the data on a scatter plot. | ![](images/stars-level-3.png) |
-| [Exercise 10](tidyverse1.qmd#exercise-10) | **Box plot**: Here we will learn how to deal with categorised data and plot them in box plots. | ![](images/stars-level-3.png) |
+::: {.callout-note icon="false" appearance="minimal"}
+## Managed to solve all the exercises? Second badge earned!
 
+</br> In the programming world, many organisations award badges to learners on the acquisition of a new skill or completion of a milestone. If you attempted and solved all the exercises of this practical, you definitely deserve your second R badge of this course.
 
-:::{.callout-note icon=false appearance="minimal"}
-## Managed to solve all the exercises?  Second badge earned!
-
-</br>
-In the programming world, many organisations award badges to learners on the acquisition of a new skill or completion of a milestone. If you attempted and solved all the exercises of this practical, you definitely deserve your second R badge of this course.
-
-![](images/level-2-badge.png){width=25% fig-align="center"} 
-
+![](images/level-2-badge.png){width="25%" fig-align="center"}
 :::
-
-

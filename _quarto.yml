@@ -11,6 +11,7 @@ book:
     - practical1.qmd
     - practical2.qmd
     - practical3.qmd
+    - practical4.qmd
     
     - part: "Practical 1 Notes"
       chapters: 
@@ -25,6 +26,10 @@ book:
     - part: "Practical 3 Notes"
       chapters: 
         - tidyverse2.qmd
+        
+    - part: "Practical 4 Notes"
+      chapters: 
+        - automation.qmd
 
     - references.qmd
 

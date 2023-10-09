@@ -9,61 +9,54 @@ author:
 
 # Getting started with R programming {.unnumbered}
 
-## Aim  
-The aim of this practical is to learn the R programming language syntax and its core programming concepts and 
-how to use them.  It is the first step in learning R programming.  
+## Aim
+
+The aim of this practical is to learn the R programming language syntax and its core programming concepts and how to use them. It is the first step in learning R programming.
 
 ## Objectives
+
 During this practical you will learn how to:
 
-* create a project and an R program in RStudio
-* define variables
-* use different data types in R
-* use different data structures in Python and perform different operations with them
-* how to call functions
-* how to find help
-
+-   create a project and an R program in RStudio
+-   define variables
+-   use different data types in R
+-   use different data structures in Python and perform different operations with them
+-   how to call functions
+-   how to find help
 
 ## Instructions
 
-The best way to do this practical is to read the Practical Notes which will introduce you to the core concepts of R programming. 
-These notes are designed with all the details you would need to be able to perform the exercises in this practical. In 
-general, you would not need to refer to additional texts and resources as these notes have been explained in detail.  Apart from the exercises listed below, there are also examples throughout the notes which provide insight on the concepts introduced, and therefore, it is recommended that you also run these examples as you progress through the practical notes.  
+The best way to do this practical is to read the Practical Notes which will introduce you to the core concepts of R programming. These notes are designed with all the details you would need to be able to perform the exercises in this practical. In general, you would not need to refer to additional texts and resources as these notes have been explained in detail. Apart from the exercises listed below, there are also examples throughout the notes which provide insight on the concepts introduced, and therefore, it is recommended that you also run these examples as you progress through the practical notes.
 
-**If you are an experienced R programmer**, you might find that you already know about the content in these notes. You 
-may want to skip sections of notes that you already know and attempt the exercises that are at the higher levels. 
+**If you are an experienced R programmer**, you might find that you already know about the content in these notes. You may want to skip sections of notes that you already know and attempt the exercises that are at the higher levels.
 
 ### Exercises levels
+
 Exercises in this practical are labelled with the level of difficulty of the respective exercise:
 
-| Level | Description |
-|-------|-------------|
-| ![](images/stars-level-1.png) | **Level 1**: Exercises in Level 1 are simple exercises designed to get you familiar with the R syntax. If you already know how to program in R, you may skip these exercises.|
-| ![](images/stars-level-2.png) | **Level 2**: Exercises in Level 2 combine different R programming concepts to solve simple problems.|
-| ![](images/stars-level-3.png) | **Level 3**: Exercises in Level 3 solve more complex problems.
+| Level                         | Description                                                                                                                                                                   |
+|-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ![](images/stars-level-1.png) | **Level 1**: Exercises in Level 1 are simple exercises designed to get you familiar with the R syntax. If you already know how to program in R, you may skip these exercises. |
+| ![](images/stars-level-2.png) | **Level 2**: Exercises in Level 2 combine different R programming concepts to solve simple problems.                                                                          |
+| ![](images/stars-level-3.png) | **Level 3**: Exercises in Level 3 solve more complex problems.                                                                                                                |
 
 ### Exercises
 
 This practical is composed of the following exercises:
 
+| Exercise                                         | Description                                                                           | Level                         |
+|--------------------------------------------------|---------------------------------------------------------------------------------------|-------------------------------|
+| [Exercise 1](intro-r-programming.qmd#exercise-1) | **Variables**: In this exercise we assign different values to variables               | ![](images/stars-level-1.png) |
+| [Exercise 2](intro-r-programming.qmd#exercise-2) | **Vectors**: This exercise introduces vector operations.                              | ![](images/stars-level-1.png) |
+| [Exercise 3](intro-r-programming.qmd#exercise-3) | **Missing data**: In this exercise we will look on how to tackle missing data.        | ![](images/stars-level-1.png) |
+| [Exercise 4](starting-with-data.qmd#exercise-4)  | **Data frame**: In this exercise we explore the different attributes of a data frame. | ![](images/stars-level-1.png) |
+| [Exercise 5](starting-with-data.qmd#exercise-5)  | **Data frame indexing**: In this exercise we will index dataframe in different ways.  | ![](images/stars-level-2.png) |
+| [Exercise 6](starting-with-data.qmd#exercise-6)  | **Factors**: This exercise we will look at categorical data.                          | ![](images/stars-level-1.png) |
 
-| Exercise                                         | Description     | Level                         |
-|----|---|--|
-| [Exercise 1](intro-r-programming.qmd#exercise-1) | **Variables**: In this exercise we assign different values to variables | ![](images/stars-level-1.png) |
-| [Exercise 2](intro-r-programming.qmd#exercise-2) | **Vectors**: This exercise introduces vector operations. | ![](images/stars-level-1.png) |
-| [Exercise 3](intro-r-programming.qmd#exercise-3) | **Missing data**:  In this exercise we will look on how to tackle missing data. | ![](images/stars-level-1.png)
-| [Exercise 4](starting-with-data.qmd#exercise-4) | **Data frame**: In this exercise we explore the different attributes of a data frame. | ![](images/stars-level-1.png) |
-| [Exercise 5](starting-with-data.qmd#exercise-5) | **Data frame indexing**: In this exercise we will index dataframe in different ways. | ![](images/stars-level-2.png) | 
-| [Exercise 6](starting-with-data.qmd#exercise-6) | **Factors**: This exercise we will look at categorical data. | ![](images/stars-level-1.png) | 
+::: {.callout-note icon="false" appearance="minimal"}
+## Managed to solve all the exercises? First badge earned!
 
-:::{.callout-note icon=false appearance="minimal"}
-## Managed to solve all the exercises?  First badge earned!
+</br> In the programming world, many organisations award badges to learners on the acquisition of a new skill or completion of a milestone. If you attempted and solved all the exercises of this practical, you definitely deserve your first R badge of this course.
 
-</br>
-In the programming world, many organisations award badges to learners on the acquisition of a new skill or completion of a milestone. If you attempted and solved all the exercises of this practical, you definitely deserve your first R badge of this course.
-
-![](images/level-1-badge.png){width=25% fig-align="center"} 
-
+![](images/level-1-badge.png){width="25%" fig-align="center"}
 :::
-
-

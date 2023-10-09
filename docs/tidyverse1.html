@@ -177,6 +177,12 @@ div.csl-indent {
  <span class="menu-text">Practical 3</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./practical4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 4</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
@@ -236,6 +242,23 @@ div.csl-indent {
   <div class="sidebar-item-container"> 
   <a href="./tidyverse2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Further data manipulation and visualisation with tidyverse</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Practical 4 Notes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./automation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Automation in R</span></span></a>
   </div>
 </li>
       </ul>
@@ -349,12 +372,12 @@ div.csl-indent {
 <p>Tidyverse is a recent package (launched in 2016) when compared to <em>R base</em> (stable version in 2000), thus you will still come across R resources that do not use <em>tidyverse</em>. However, since its’ release, <em>tidyverse</em> has been increasing in popularity throughout the R programming community and it is now very popular in Data Science as it was designed with the aim to help Data Scientists perform their tasks more efficiently.</p>
 <p>Some of the main advantages of <em>tidyverse</em> over <em>R base</em> are:</p>
 <ol type="1">
-<li><strong>Easier to read </strong>
+<li><p><strong>Easier to read</strong></p>
 <p>
-Bracket subsetting is handy, but it can be cumbersome and difficult to read, especially for complicated operations.
-</p>
+</p><p>Bracket subsetting is handy, but it can be cumbersome and difficult to read, especially for complicated operations.</p>
+<p></p>
 <!--https://www.onthelambda.com/2014/02/10/how-dplyr-replaced-my-most-common-r-idioms/-->
-<em>e.g.</em> Get only the rows that have species as albigula surveyed in the year 1977.</li>
+<p><em>e.g.</em> Get only the rows that have species as albigula surveyed in the year 1977.</p></li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R Base</span></span>
@@ -365,13 +388,13 @@ Bracket subsetting is handy, but it can be cumbersome and difficult to read, esp
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(surveys, species<span class="sc">==</span><span class="st">"albigula"</span> <span class="sc">&amp;</span> year<span class="sc">==</span><span class="dv">1977</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="2" type="1">
-<li><strong>Faster</strong>
+<li><p><strong>Faster</strong></p>
 <p>
-Using tidyverse is up to 10x faster<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> when compared to the corresponding base R base functions.
-</p></li>
-<li><strong>Strings are not converted to <code>factor</code></strong>
+</p><p>Using tidyverse is up to 10x faster<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> when compared to the corresponding base R base functions.</p>
+<p></p></li>
+<li><p><strong>Strings are not converted to <code>factor</code></strong></p>
 <p>
-We have seen in our previous lesson that when building or importing a data frame, the columns that contain characters (<em>i.e.</em>, text) are coerced (=converted) into the <code>factor</code> data type. We had to set <strong><code>stringsAsFactors</code></strong> to <strong><code>FALSE</code></strong> to avoid this hidden argument to convert our data type. With tidyverse, this does not happen.</p></li>
+</p><p>We have seen in our previous lesson that when building or importing a data frame, the columns that contain characters (<em>i.e.</em>, text) are coerced (=converted) into the <code>factor</code> data type. We had to set <strong><code>stringsAsFactors</code></strong> to <strong><code>FALSE</code></strong> to avoid this hidden argument to convert our data type. With tidyverse, this does not happen.</p></li>
 </ol>
 </section>
 <section id="installing-and-loading-packages" class="level3" data-number="4.2.2">
@@ -1047,7 +1070,7 @@ Note
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1">https://readr.tidyverse.org/
+<li id="fn1"><p>https://readr.tidyverse.org/</p>
 <p></p>
 <a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></li>
 </ol>

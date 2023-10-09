@@ -99,7 +99,7 @@ mass_index <- mass/age  # mass_index is 0.931
 
 
 
-### Functions and their arguments
+### Functions and their arguments {#calling-functions}
 
 Functions are "canned scripts" that automate more complicated sets of commands including operations assignments, etc. Many functions are predefined, or can be made available by importing R *packages* (more on that later). A function usually takes one or more inputs called *arguments*. Functions often (but not always) return a *value*. A typical example would be the function `sqrt()`. The input (the argument) must be a number, and the return value (in fact, the output) is the square root of that number. Executing a function ('running it') is called *calling* the function. An example of a function call is:
 

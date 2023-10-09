@@ -157,6 +157,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Practical 3</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./practical4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 4</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
@@ -220,6 +226,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Practical 4 Notes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./automation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Automation in R</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
@@ -239,7 +262,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#creating-objects-in-r" id="toc-creating-objects-in-r" class="nav-link active" data-scroll-target="#creating-objects-in-r"><span class="header-section-number">2.1</span> Creating objects in R</a>
   <ul class="collapse">
   <li><a href="#comments" id="toc-comments" class="nav-link" data-scroll-target="#comments"><span class="header-section-number">2.1.2</span> Comments</a></li>
-  <li><a href="#functions-and-their-arguments" id="toc-functions-and-their-arguments" class="nav-link" data-scroll-target="#functions-and-their-arguments"><span class="header-section-number">2.1.3</span> Functions and their arguments</a></li>
+  <li><a href="#calling-functions" id="toc-calling-functions" class="nav-link" data-scroll-target="#calling-functions"><span class="header-section-number">2.1.3</span> Functions and their arguments</a></li>
   </ul></li>
   <li><a href="#vectors-and-data-types" id="toc-vectors-and-data-types" class="nav-link" data-scroll-target="#vectors-and-data-types"><span class="header-section-number">2.2</span> Vectors and data types</a></li>
   <li><a href="#subsetting-vectors" id="toc-subsetting-vectors" class="nav-link" data-scroll-target="#subsetting-vectors"><span class="header-section-number">2.3</span> Subsetting vectors</a>
@@ -377,8 +400,8 @@ Solution for Exercise 1
 </div>
 </div>
 </section>
-<section id="functions-and-their-arguments" class="level3" data-number="2.1.3">
-<h3 data-number="2.1.3" class="anchored" data-anchor-id="functions-and-their-arguments"><span class="header-section-number">2.1.3</span> Functions and their arguments</h3>
+<section id="calling-functions" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="calling-functions"><span class="header-section-number">2.1.3</span> Functions and their arguments</h3>
 <p>Functions are “canned scripts” that automate more complicated sets of commands including operations assignments, etc. Many functions are predefined, or can be made available by importing R <em>packages</em> (more on that later). A function usually takes one or more inputs called <em>arguments</em>. Functions often (but not always) return a <em>value</em>. A typical example would be the function <code>sqrt()</code>. The input (the argument) must be a number, and the return value (in fact, the output) is the square root of that number. Executing a function (‘running it’) is called <em>calling</em> the function. An example of a function call is:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
