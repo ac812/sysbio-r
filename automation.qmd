@@ -276,7 +276,7 @@ Level: ![](images/stars-level-3.png)
 
 Draw a half pyramid as shown below using asterisks.
 
-\*
+\* 
 
 \* \*
 
@@ -300,7 +300,7 @@ asterisk <- c()
 #this is the outer loop that handles rows
 for (i in 1:5){
   #this is the inner loop that handles columns
-  for(j in 1:i+1){
+  for(j in 1:i){
     asterisk <- c(asterisk, "*")
   }
   #print line by line
